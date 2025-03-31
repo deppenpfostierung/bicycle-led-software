@@ -9,3 +9,8 @@ sdkconfig.old*
 .ccache
 .vscode
 managed_components
+
+# configs
+/config.cmake
+/build/
+/sdkconfig
