@@ -52,8 +52,11 @@ jobs:
         run: |
           CONFIGS=$(./switchconf.sh --list) # outputs the list of configs separated by spaces
           # format it to json array
+          echo "CONFIGS: $CONFIGS"
           CONFIGS=$(echo $CONFIGS | sed 's/ /", "/g')
+          echo "CONFIGS: $CONFIGS"
           CONFIGS="[\"$CONFIGS\"]"
+          echo "CONFIGS: $CONFIGS"
           # set the output variable
           echo "configs=$CONFIGS" >> $GITHUB_OUTPUT
 
