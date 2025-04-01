@@ -11,6 +11,8 @@ jobs:
   setup-idf:
     name: Setup ESP-IDF
     runs-on: ubuntu-latest
+    outputs:
+      idf_version: ${{ steps.get-idf-version.outputs.idf_version }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -23,13 +25,14 @@ jobs:
           cd esp-idf
           idf_version=$(git rev-parse HEAD)
           echo "idf_version=$idf_version" >> $GITHUB_ENV
+          echo "idf_version=$idf_version" >> $GITHUB_OUTPUT
           echo "home=$HOME" >> $GITHUB_ENV
 
       - name: Cache esp-idf
         uses: actions/cache@v4
         with:
           path: ${{ env.home }}/.espressif
-          key: esp-idf-${{ env.idf_version }}
+          key: ${{ runner.os }}-esp-idf-${{ env.idf_version }}
 
       - name: Set up ESP-IDF
         run: |
@@ -66,6 +69,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [setup-idf, get-configs]
     strategy:
+      fail-fast: false
       matrix:
         config: ${{ fromJSON(needs.get-configs.outputs.configs) }}
     steps:
@@ -73,6 +77,17 @@ jobs:
         uses: actions/checkout@v4
         with:
           submodules: recursive
+
+      - name: Get home directory
+        id: get-home
+        run: echo "home=$HOME" >> $GITHUB_ENV
+
+      - name: Restore esp-idf cache
+        uses: actions/cache/restore@v4
+        with:
+          path: ${{ env.home }}/.espressif
+          key: ${{ runner.os }}-esp-idf-${{ needs.setup-idf.outputs.idf_version }}
+          fail-on-cache-miss: true
 
       - name: Compile firmware
         run: |
