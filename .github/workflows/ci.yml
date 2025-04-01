@@ -1,0 +1,114 @@
+name: Firmware CI
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  setup-idf:
+    name: Setup ESP-IDF
+    runs-on: ubuntu-latest
+    outputs:
+      idf_version: ${{ steps.get-idf-version.outputs.idf_version }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Get esp-idf version
+        id: get-idf-version
+        run: |
+          # Get the commit hash of the ./esp-idf submodule without checking it out
+          git submodule update --init --depth 1 -- esp-idf
+          cd esp-idf
+          idf_version=$(git rev-parse HEAD)
+          echo "idf_version=$idf_version" >> $GITHUB_ENV
+          echo "idf_version=$idf_version" >> $GITHUB_OUTPUT
+          echo "home=$HOME" >> $GITHUB_ENV
+
+      - name: Cache esp-idf
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.home }}/.espressif
+          key: ${{ runner.os }}-esp-idf-${{ env.idf_version }}
+
+      - name: Set up ESP-IDF
+        run: |
+          cd esp-idf
+          ./install.sh
+          cd ../
+          . export.sh
+          idf.py --version
+
+  get-configs:
+    name: Get Configs
+    runs-on: ubuntu-latest
+    outputs:
+      configs: ${{ steps.get-configs.outputs.configs }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Get configs
+        id: get-configs
+        run: |
+          CONFIGS=$(./switchconf.sh --list) # outputs the list of configs separated by spaces
+          # format it to json array
+          echo "CONFIGS: $CONFIGS"
+          CONFIGS=$(echo $CONFIGS | sed 's/ /", "/g')
+          echo "CONFIGS: $CONFIGS"
+          CONFIGS="[\"$CONFIGS\"]"
+          echo "CONFIGS: $CONFIGS"
+          # set the output variable
+          echo "configs=$CONFIGS" >> "$GITHUB_OUTPUT"
+
+  build:
+    name: Build ${{ matrix.config }}
+    runs-on: ubuntu-latest
+    needs: [setup-idf, get-configs]
+    strategy:
+      fail-fast: false
+      matrix:
+        config: ${{ fromJSON(needs.get-configs.outputs.configs) }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Get home directory
+        id: get-home
+        run: echo "home=$HOME" >> $GITHUB_ENV
+
+      - name: Restore esp-idf cache
+        uses: actions/cache/restore@v4
+        with:
+          path: ${{ env.home }}/.espressif
+          key: ${{ runner.os }}-esp-idf-${{ needs.setup-idf.outputs.idf_version }}
+          fail-on-cache-miss: true
+
+      - name: Compile firmware
+        run: |
+          # Set the config
+          ./switchconf.sh ${{ matrix.config }}
+          
+          # Verify build folder exists and is a symlink
+          if [ ! -L "build" ]; then
+              echo "Build folder is not a symlink"
+              exit 1
+          fi
+          
+          . export.sh
+          
+          # Build the firmware
+          idf.py build
+
+      - name: Upload firmware binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: firmware-${{ matrix.config }}
+          path: |
+            build/bicycle-${{ matrix.config }}.bin
+            # build/bicycle-${{ matrix.config }}.elf
