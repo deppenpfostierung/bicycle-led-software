@@ -16,7 +16,6 @@ if len(output) == 0:
     print('No configurations found!')
     exit(1)
 
-# check if PATH (env) contains 'bobbycar-boardcomputer-firmware
 if 'bicycle-led-software' not in os.environ['PATH']:
     print('Please execute ". export.sh"')
     exit(1)

@@ -1,0 +1,36 @@
+site_name: bicycle-led-software
+site_description: "bicycle-led-software is the software powering the bicycle LED PCB for your bike"
+copyright: Copyright &copy; 2025 CommanderRedYT and others
+
+repo_url: https://github.com/deppenpfostierung/bicycle-led-software
+repo_name: deppenpfostierung/bicycle-led-software
+edit_uri: edit/main/docs/
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/deppenpfostierung/bicycle-led-software
+
+theme:
+  name: material
+  language: en
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.prev_next
+    - navigation.top
+    - search
+    - search.suggest
+    - content.code.copy
+    - content.code.highlight
+    - content.tooltips
+    - content.action.view
+    - content.action.edit
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.superfences
+  - github-callouts
