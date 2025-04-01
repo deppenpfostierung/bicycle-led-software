@@ -25,24 +25,6 @@ jobs:
               echo "The repo is dirty. Please commit the changes."
               exit 1
           fi
-          
-  check-sdkconfigs:
-    name: Check sdkconfig
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Check sdkconfig
-        run: |
-          # Check if the sdkconfig is in the correct format
-          ./update_all_sdkconfigs.py
-          
-          # fail if the repo is dirty
-          if [ -n "$(git status --porcelain)" ]; then
-              echo "The repo is dirty. Please commit the changes."
-              exit 1
-          fi
 
   setup-idf:
     name: Setup ESP-IDF
@@ -77,6 +59,38 @@ jobs:
           cd ../
           . export.sh
           idf.py --version
+          
+  check-sdkconfigs:
+    name: Check sdkconfig
+    runs-on: ubuntu-latest
+    needs: setup-idf
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Get home directory
+        id: get-home
+        run: echo "home=$HOME" >> $GITHUB_ENV
+
+      - name: Restore esp-idf cache
+        uses: actions/cache/restore@v4
+        with:
+          path: ${{ env.home }}/.espressif
+          key: ${{ runner.os }}-esp-idf-${{ needs.setup-idf.outputs.idf_version }}
+          fail-on-cache-miss: true
+
+      - name: Check sdkconfig
+        run: |
+          . export.sh
+          
+          # Check if the sdkconfig is in the correct format
+          ./update_all_sdkconfigs.py
+          
+          # fail if the repo is dirty
+          if [ -n "$(git status --porcelain)" ]; then
+              echo "The repo is dirty. Please commit the changes."
+              exit 1
+          fi
 
   get-configs:
     name: Get Configs
