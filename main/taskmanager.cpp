@@ -22,8 +22,8 @@ void noop()
 }
 
 SchedulerTask schedulerTaskArr[] {
-    SchedulerTask {"wifi", wifi::begin, wifi::update, 100ms},
-    SchedulerTask { "display_update", noop, bicycle::screen::loop, 16ms },
+    SchedulerTask { "wifi",           wifi::begin, wifi::update,          100ms },
+    SchedulerTask { "display_update", noop,        bicycle::screen::loop, 16ms  },
 };
 } // namespace
 

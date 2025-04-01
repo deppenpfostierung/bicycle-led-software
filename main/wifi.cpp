@@ -1,6 +1,6 @@
 #include "wifi.h"
 
-constexpr const char * const TAG = "WIFI";
+constexpr const char *const TAG = "WIFI";
 
 // system includes
 #include <expected>
@@ -20,16 +20,18 @@ constexpr const char * const TAG = "WIFI";
 #include "configs.h"
 #include "global_lock.h"
 
-namespace bicycle::wifi {
+namespace bicycle::wifi
+{
 
-namespace {
+namespace
+{
 
 wifi_stack::config createConfig();
 std::optional<wifi_stack::sta_config> createStaConfig();
-wifi_stack::wifi_entry createWiFiEntry(const WiFiConfig& wiFiConfig);
+wifi_stack::wifi_entry createWiFiEntry(const WiFiConfig &wiFiConfig);
 std::optional<wifi_stack::ap_config> createApConfig();
 
-bool lastStaConnected{false};
+bool lastStaConnected { false };
 
 } // namespace
 
@@ -42,7 +44,7 @@ void begin()
 
 void update()
 {
-    espcpputils::RecursiveLockHelper guard{global::global_lock->handle};
+    espcpputils::RecursiveLockHelper guard { global::global_lock->handle };
     wifi_stack::update(createConfig());
 
     const bool staConnected = isStaConnected();
@@ -82,16 +84,15 @@ bool isApUp()
     if (!configs.network.apEnabled.value())
         return false;
 
-    if (
-            configs.network.apOnlyWhenNotConnected.value() &&
-            wifi_stack::get_sta_status() == wifi_stack::WiFiStaStatus::CONNECTED
-    )
+    if (configs.network.apOnlyWhenNotConnected.value()
+        && wifi_stack::get_sta_status() == wifi_stack::WiFiStaStatus::CONNECTED)
         return false;
 
     return true;
 }
 
-namespace {
+namespace
+{
 
 wifi_stack::config createConfig()
 {
@@ -107,26 +108,27 @@ std::optional<wifi_stack::sta_config> createStaConfig()
     if (!configs.network.staEnabled.value())
         return std::nullopt;
 
-    return wifi_stack::sta_config{
+    return wifi_stack::sta_config {
         .hostname = configs.network.hostname.value(),
-        .wifis = []() {
-            std::array<wifi_stack::wifi_entry, CONFIG_WIFI_STA_CONFIG_COUNT> wifis;
-            for (size_t i = 0; i < CONFIG_WIFI_STA_CONFIG_COUNT; ++i)
-                wifis[i] = createWiFiEntry(configs.network.wifis[i]);
-            return wifis;
-        }(),
+        .wifis =
+            []() {
+                std::array<wifi_stack::wifi_entry, CONFIG_WIFI_STA_CONFIG_COUNT> wifis;
+                for (size_t i = 0; i < CONFIG_WIFI_STA_CONFIG_COUNT; ++i)
+                    wifis[i] = createWiFiEntry(configs.network.wifis[i]);
+                return wifis;
+            }(),
         .min_rssi = -90,
         .long_range = false,
     };
 }
 
-wifi_stack::wifi_entry createWiFiEntry(const WiFiConfig& wiFiConfig)
+wifi_stack::wifi_entry createWiFiEntry(const WiFiConfig &wiFiConfig)
 {
     std::optional<wifi_stack::static_ip_config> staticIpConfig;
 
     if (wiFiConfig.useStaticIp.value())
     {
-        staticIpConfig = wifi_stack::static_ip_config{
+        staticIpConfig = wifi_stack::static_ip_config {
             .ip = wiFiConfig.staticIp.value(),
             .subnet = wiFiConfig.staticSubnet.value(),
             .gateway = wiFiConfig.staticGateway.value(),
@@ -145,7 +147,7 @@ wifi_stack::wifi_entry createWiFiEntry(const WiFiConfig& wiFiConfig)
             staticDnsConfig.fallback = wiFiConfig.staticDns2.value();
     }
 
-    return wifi_stack::wifi_entry{
+    return wifi_stack::wifi_entry {
         .ssid = wiFiConfig.ssid.value(),
         .key = wiFiConfig.key.value(),
         .static_ip = staticIpConfig,
@@ -162,11 +164,9 @@ std::optional<wifi_stack::ap_config> createApConfig()
         .hostname = configs.network.hostname.value(),
         .ssid = configs.network.apName.value(),
         .key = configs.network.apKey.value(),
-        .static_ip = {
-                .ip = configs.network.apIp.value(),
-                .subnet = configs.network.apMask.value(),
-                .gateway = configs.network.apIp.value()
-        },
+        .static_ip = { .ip = configs.network.apIp.value(),
+                      .subnet = configs.network.apMask.value(),
+                      .gateway = configs.network.apIp.value() },
         .channel = configs.network.apChannel.value(),
         .authmode = configs.network.apAuthmode.value(),
         .ssid_hidden = false,

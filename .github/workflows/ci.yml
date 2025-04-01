@@ -101,8 +101,7 @@ jobs:
 
       - name: Run clang-format
         run: |
-          # Check if the code is in the correct format
-          git diff --exit-code --name-only | grep -E '\.(c|h|cpp|hpp)$' | xargs clang-format --verbose --dry-run --Werror
+          ./format.sh
           
           # fail if the repo is dirty
           if [ -n "$(git status --porcelain)" ]; then

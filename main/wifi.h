@@ -4,7 +4,8 @@
 #include <expected>
 #include <string>
 
-namespace bicycle::wifi {
+namespace bicycle::wifi
+{
 
 void begin();
 

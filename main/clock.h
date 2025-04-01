@@ -6,7 +6,8 @@
 // 3rdparty lib includes
 #include <espchrono.h>
 
-namespace bicycle::espclock {
+namespace bicycle::espclock
+{
 
 espchrono::time_zone get_default_timezone() noexcept;
 
@@ -18,9 +19,9 @@ void syncNow();
 
 bool isSynced();
 
-const std::optional<espchrono::utc_clock::time_point>& sunrise();
+const std::optional<espchrono::utc_clock::time_point> &sunrise();
 
-const std::optional<espchrono::utc_clock::time_point>& sunset();
+const std::optional<espchrono::utc_clock::time_point> &sunset();
 
 bool isNight();
 

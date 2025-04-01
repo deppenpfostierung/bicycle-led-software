@@ -66,10 +66,10 @@ void loop()
 {
     if (tft.getRotation() != (configs.display.rotated.value() ? 1 : 3))
     {
-      tft.setRotation(configs.display.rotated.value() ? 1 : 3);
+        tft.setRotation(configs.display.rotated.value() ? 1 : 3);
 
-      if (espgui::currentDisplay)
-        espgui::currentDisplay->initScreen(tft);
+        if (espgui::currentDisplay)
+            espgui::currentDisplay->initScreen(tft);
     }
 
     if (espchrono::ago(lastDisplayUpdate) >= 1000ms / 50)

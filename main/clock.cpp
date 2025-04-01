@@ -1,4 +1,4 @@
-constexpr const char * const TAG = "espclock";
+constexpr const char *const TAG = "espclock";
 
 // esp-idf includes
 #include <apps/esp_sntp.h>
@@ -16,7 +16,7 @@ constexpr const char * const TAG = "espclock";
 espchrono::time_zone get_default_timezone() noexcept
 {
     using namespace espchrono;
-    return time_zone{configs.time.offset.value(), configs.time.dst.value()};
+    return time_zone { configs.time.offset.value(), configs.time.dst.value() };
 }
 
 #ifdef CONFIG_ESPCHRONO_SUPPORT_DEFAULT_TIMEZONE
@@ -26,7 +26,8 @@ espchrono::time_zone espchrono::get_default_timezone() noexcept
 }
 #endif // CONFIG_ESPCHRONO_SUPPORT_DEFAULT_TIMEZONE
 
-namespace bicycle::espclock {
+namespace bicycle::espclock
+{
 
 std::optional<espchrono::utc_clock::time_point> sunrise_time;
 std::optional<espchrono::utc_clock::time_point> sunset_time;
@@ -45,15 +46,16 @@ void update_sunrise_sunset()
 
         const auto local_now = espchrono::local_clock::now();
         const auto now_dt = espchrono::toDateTime(local_now);
-        sunSet.setCurrentDate(static_cast<int>(now_dt.date.year()), static_cast<unsigned int>(now_dt.date.month()),
+        sunSet.setCurrentDate(static_cast<int>(now_dt.date.year()),
+                              static_cast<unsigned int>(now_dt.date.month()),
                               static_cast<unsigned int>(now_dt.date.day()));
 
         // sunSet.calcSunrise() => int (minutes past midnight)
         const auto midnight = std::chrono::floor<std::chrono::days>(local_now);
-        const auto sunrise_minutes = std::chrono::minutes{static_cast<int>(sunSet.calcSunrise())};
-        const auto sunset_minutes = std::chrono::minutes{static_cast<int>(sunSet.calcSunset())};
-        sunrise_time = espchrono::utc_clock::time_point{midnight.time_since_epoch() + sunrise_minutes};
-        sunset_time = espchrono::utc_clock::time_point{midnight.time_since_epoch() + sunset_minutes};
+        const auto sunrise_minutes = std::chrono::minutes { static_cast<int>(sunSet.calcSunrise()) };
+        const auto sunset_minutes = std::chrono::minutes { static_cast<int>(sunSet.calcSunset()) };
+        sunrise_time = espchrono::utc_clock::time_point { midnight.time_since_epoch() + sunrise_minutes };
+        sunset_time = espchrono::utc_clock::time_point { midnight.time_since_epoch() + sunset_minutes };
 
         ESP_LOGI(TAG, "Sunrise: %lld", sunrise_time->time_since_epoch() / 1s);
         ESP_LOGI(TAG, "Sunset: %lld", sunset_time->time_since_epoch() / 1s);
@@ -62,13 +64,13 @@ void update_sunrise_sunset()
     }
 }
 
-const std::optional<espchrono::utc_clock::time_point>& sunrise()
+const std::optional<espchrono::utc_clock::time_point> &sunrise()
 {
     update_sunrise_sunset();
     return sunrise_time;
 }
 
-const std::optional<espchrono::utc_clock::time_point>& sunset()
+const std::optional<espchrono::utc_clock::time_point> &sunset()
 {
     update_sunrise_sunset();
     return sunset_time;
@@ -83,9 +85,10 @@ bool isNight()
     return now < sunrise().value() || now > sunset().value();
 }
 
-namespace {
-bool time_synced{false};
-bool time_synced_prev{false};
+namespace
+{
+bool time_synced { false };
+bool time_synced_prev { false };
 
 void time_sync_notification_cb(struct timeval *tv)
 {
@@ -113,7 +116,7 @@ void begin()
     esp_sntp_setservername(0, configs.time.ntpServer.value().c_str());
     esp_sntp_set_time_sync_notification_cb(time_sync_notification_cb);
     esp_sntp_set_sync_mode(configs.time.ntpSyncMode.value());
-    esp_sntp_set_sync_interval(espchrono::milliseconds32{configs.time.ntpSyncInterval.value()}.count());
+    esp_sntp_set_sync_interval(espchrono::milliseconds32 { configs.time.ntpSyncInterval.value() }.count());
 
     esp_sntp_init();
 
