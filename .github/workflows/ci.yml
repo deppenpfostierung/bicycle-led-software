@@ -75,7 +75,7 @@ jobs:
       - name: Checkout esp-idf
         run: |
           # Get the commit hash of the ./esp-idf submodule without checking it out
-          git submodule update --init --depth 1 -- esp-idf esp-protocols
+          git submodule update --init --recursive -- esp-idf esp-protocols
 
       - name: Restore esp-idf cache
         uses: actions/cache/restore@v4
