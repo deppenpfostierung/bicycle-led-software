@@ -42,6 +42,8 @@ jobs:
   get-configs:
     name: Get Configs
     runs-on: ubuntu-latest
+    outputs:
+      configs: ${{ steps.get-configs.outputs.configs }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -53,7 +55,7 @@ jobs:
           CONFIGS=$(echo $CONFIGS | sed 's/ /", "/g')
           CONFIGS="[\"$CONFIGS\"]"
           # set the output variable
-          echo "configs=$CONFIGS" >> $GITHUB_ENV
+          echo "configs=$CONFIGS" >> $GITHUB_OUTPUT
 
   build:
     name: Build ${{ matrix.config }}
@@ -61,7 +63,7 @@ jobs:
     needs: [setup-idf, get-configs]
     strategy:
       matrix:
-        config: ${{ fromJson(env.configs) }}
+        config: ${{ fromJson(needs.get-configs.outputs.configs) }}
     steps:
       - name: Print matrix
         env:
