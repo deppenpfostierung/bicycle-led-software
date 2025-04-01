@@ -68,7 +68,6 @@ jobs:
       - name: Print configs
         run: |
           echo "Configs: ${{ needs.get-configs.outputs.configs }}"
-          echo "JSON: ${{ fromJSON(needs.get-configs.outputs.configs) }}"
 
   build:
     name: Build ${{ matrix.config }}
