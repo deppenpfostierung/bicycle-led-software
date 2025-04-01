@@ -15,6 +15,9 @@ std::string defaultHostname()
     else
 
 
+
+
+
         ESP_LOGE(TAG, "get_default_mac_addr() failed: %.*s", result.error().size(), result.error().data());
     return APP_NAME;
 }
