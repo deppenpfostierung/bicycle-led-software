@@ -111,4 +111,4 @@ jobs:
           name: firmware-${{ matrix.config }}
           path: |
             build/bicycle-${{ matrix.config }}.bin
-            # build/bicycle-${{ matrix.config }}.elf
+            build/bicycle-${{ matrix.config }}.elf
