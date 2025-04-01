@@ -8,6 +8,42 @@ on:
       - main
 
 jobs:
+  check-icons:
+    name: Check icons
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check icons
+        run: |
+          # Check if the icons are in the correct format
+          ./convert-icons.sh
+          
+          # fail if the repo is dirty
+          if [ -n "$(git status --porcelain)" ]; then
+              echo "The repo is dirty. Please commit the changes."
+              exit 1
+          fi
+          
+  check-sdkconfigs:
+    name: Check sdkconfig
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check sdkconfig
+        run: |
+          # Check if the sdkconfig is in the correct format
+          ./update_all_sdkconfigs.py
+          
+          # fail if the repo is dirty
+          if [ -n "$(git status --porcelain)" ]; then
+              echo "The repo is dirty. Please commit the changes."
+              exit 1
+          fi
+
   setup-idf:
     name: Setup ESP-IDF
     runs-on: ubuntu-latest
@@ -67,7 +103,11 @@ jobs:
   build:
     name: Build ${{ matrix.config }}
     runs-on: ubuntu-latest
-    needs: [setup-idf, get-configs]
+    needs:
+      - setup-idf
+      - get-configs
+      - check-icons
+      - check-sdkconfigs
     strategy:
       fail-fast: false
       matrix:
@@ -104,6 +144,12 @@ jobs:
           
           # Build the firmware
           idf.py build
+          
+          # Check if the repo is dirty
+          if [ -n "$(git status --porcelain)" ]; then
+              echo "The repo is dirty."
+              exit 1
+          fi
 
       - name: Upload firmware binary
         uses: actions/upload-artifact@v4
