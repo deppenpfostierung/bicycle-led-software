@@ -19,7 +19,7 @@ jobs:
         id: get-idf-version
         run: |
           # Get the commit hash of the ./esp-idf submodule without checking it out
-          git submodule update --init --depth 1
+          git submodule update --init --depth 1 -- esp-idf
           cd esp-idf
           idf_version=$(git rev-parse HEAD)
           echo "idf_version=$idf_version" >> $GITHUB_ENV
