@@ -72,6 +72,11 @@ jobs:
         id: get-home
         run: echo "home=$HOME" >> $GITHUB_ENV
 
+      - name: Checkout esp-idf
+        run: |
+          # Get the commit hash of the ./esp-idf submodule without checking it out
+          git submodule update --init --depth 1 -- esp-idf
+
       - name: Restore esp-idf cache
         uses: actions/cache/restore@v4
         with:
@@ -79,14 +84,11 @@ jobs:
           key: ${{ runner.os }}-esp-idf-${{ needs.setup-idf.outputs.idf_version }}
           fail-on-cache-miss: true
 
-      - name: Checkout esp-idf
-        run: |
-            # Get the commit hash of the ./esp-idf submodule without checking it out
-            git submodule update --init --depth 1 -- esp-idf
-
       - name: Check sdkconfig
         run: |
           . export.sh
+          
+          idf.py --version
           
           # Check if the sdkconfig is in the correct format
           ./update_all_sdkconfigs.py
