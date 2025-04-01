@@ -1,57 +1,57 @@
 [submodule "esp-idf"]
 	path = esp-idf
-	url = git@github.com:CommanderRedYT/esp-idf.git
+	url = ../../CommanderRedYT/esp-idf.git
 [submodule "components/cpputils"]
 	path = components/cpputils
-	url = git@github.com:CommanderRedYT/cpputils.git
+	url = ../../CommanderRedYT/cpputils.git
 [submodule "components/arduino-esp32"]
 	path = components/arduino-esp32
-	url = git@github.com:CommanderRedYT/arduino-esp32.git
+	url = ../../CommanderRedYT/arduino-esp32.git
 [submodule "components/fmt"]
 	path = components/fmt
-	url = git@github.com:CommanderRedYT/fmt.git
+	url = ../../CommanderRedYT/fmt.git
 [submodule "components/FastLED-idf"]
 	path = components/FastLED-idf
-	url = git@github.com:CommanderRedYT/FastLED-idf.git
+	url = ../../CommanderRedYT/FastLED-idf.git
 [submodule "components/espconfiglib"]
 	path = components/espconfiglib
-	url = git@github.com:CommanderRedYT/espconfiglib.git
+	url = ../../CommanderRedYT/espconfiglib.git
 [submodule "esp-protocols"]
 	path = esp-protocols
-	url = git@github.com:CommanderRedYT/esp-protocols.git
+	url = ../../CommanderRedYT/esp-protocols.git
 [submodule "components/date"]
 	path = components/date
-	url = git@github.com:CommanderRedYT/date.git
+	url = ../../CommanderRedYT/date.git
 [submodule "components/espcpputils"]
 	path = components/espcpputils
-	url = git@github.com:CommanderRedYT/espcpputils.git
+	url = ../../CommanderRedYT/espcpputils.git
 [submodule "components/espchrono"]
 	path = components/espchrono
-	url = git@github.com:CommanderRedYT/espchrono.git
+	url = ../../CommanderRedYT/espchrono.git
 [submodule "components/ArduinoJson"]
 	path = components/ArduinoJson
-	url = git@github.com:CommanderRedYT/ArduinoJson.git
+	url = ../../CommanderRedYT/ArduinoJson.git
 [submodule "components/esphttpdutils"]
 	path = components/esphttpdutils
-	url = git@github.com:CommanderRedYT/esphttpdutils.git
+	url = ../../CommanderRedYT/esphttpdutils.git
 [submodule "components/espwifistack"]
 	path = components/espwifistack
-	url = git@github.com:CommanderRedYT/espwifistack.git
+	url = ../../CommanderRedYT/espwifistack.git
 [submodule "components/cxx-ring-buffer"]
 	path = components/cxx-ring-buffer
-	url = git@github.com:CommanderRedYT/cxx-ring-buffer.git
+	url = ../../CommanderRedYT/cxx-ring-buffer.git
 [submodule "components/TFT_eSPI"]
 	path = components/TFT_eSPI
-	url = git@github.com:0xFEEDC0DE64/TFT_eSPI.git
+	url = ../../0xFEEDC0DE64/TFT_eSPI.git
 [submodule "components/esptftlib"]
 	path = components/esptftlib
-	url = git@github.com:0xFEEDC0DE64/esptftlib.git
+	url = ../../0xFEEDC0DE64/esptftlib.git
 [submodule "components/espfontlib"]
 	path = components/espfontlib
-	url = git@github.com:CommanderRedYT/espfontlib.git
+	url = ../../CommanderRedYT/espfontlib.git
 [submodule "components/esp-gui-lib"]
 	path = components/esp-gui-lib
-	url = git@github.com:CommanderRedYT/esp-gui-lib.git
+	url = ../../CommanderRedYT/esp-gui-lib.git
 [submodule "components/sunset-idf"]
 	path = components/sunset-idf
-	url = git@github.com:CommanderRedYT/sunset-idf.git
+	url = ../../CommanderRedYT/sunset-idf.git
