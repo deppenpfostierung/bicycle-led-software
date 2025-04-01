@@ -1,0 +1,34 @@
+# GitHub Labeler Configuration
+Documentation:
+  - changed-files:
+      - any-glob-to-any-file: docs/**
+
+Feature:
+  - head-branch: ['^feature', 'feature']
+
+Bug:
+  - head-branch: ['^bug', 'bug']
+
+Bugfix:
+  - head-branch: ['^bug', 'bug']
+
+Dependencies:
+  - changed-files:
+      - any-glob-to-any-file: components/**
+      - any-glob-to-any-file: dependencies.lock
+
+CI:
+  - changed-files:
+      - any-glob-to-any-file: .github/workflows/**
+
+Configuration:
+  - changed-files:
+      - any-glob-to-any-file: configs/**
+
+Formatting:
+  - changed-files:
+      - any-glob-to-any-file: .clang-format
+
+Icons:
+  - changed-files:
+      - any-glob-to-any-file: icons/**
