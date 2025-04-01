@@ -20,8 +20,7 @@ if 'bicycle-led-software' not in os.environ['PATH']:
 for config in output:
     print('Switching to configuration: ' + config)
     subprocess.check_call(['bash', './switchconf.sh', config])
-    # execute idf.py menuconfig and wait for user to close again
-    subprocess.check_call(['idf.py', 'menuconfig'])
+    subprocess.check_call(['idf.py', 'reconfigure'])
 
 # switch back to current configuration
 print('Switching back to configuration: ' + current_config)

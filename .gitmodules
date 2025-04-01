@@ -40,3 +40,18 @@
 [submodule "components/cxx-ring-buffer"]
 	path = components/cxx-ring-buffer
 	url = git@github.com:CommanderRedYT/cxx-ring-buffer.git
+[submodule "components/TFT_eSPI"]
+	path = components/TFT_eSPI
+	url = git@github.com:0xFEEDC0DE64/TFT_eSPI.git
+[submodule "components/esptftlib"]
+	path = components/esptftlib
+	url = git@github.com:0xFEEDC0DE64/esptftlib.git
+[submodule "components/espfontlib"]
+	path = components/espfontlib
+	url = git@github.com:CommanderRedYT/espfontlib.git
+[submodule "components/esp-gui-lib"]
+	path = components/esp-gui-lib
+	url = git@github.com:CommanderRedYT/esp-gui-lib.git
+[submodule "components/sunset-idf"]
+	path = components/sunset-idf
+	url = git@github.com:CommanderRedYT/sunset-idf.git

@@ -1,0 +1,15 @@
+---
+BasedOnStyle: Microsoft
+ColumnLimit: 120
+AccessModifierOffset: -4
+AlignArrayOfStructures: Left
+MaxEmptyLinesToKeep: 1
+
+Cpp11BracedListStyle: false
+SpaceBeforeCpp11BracedList: true
+
+BreakBeforeBinaryOperators: NonAssignment
+AllowAllArgumentsOnNextLine: false
+BinPackArguments: false
+BreakConstructorInitializers: BeforeComma
+...

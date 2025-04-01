@@ -6,21 +6,25 @@ file(
 )
 
 set(dependencies
-        freertos
-        esp_system
-        arduino-esp32
-        fmt
         ArduinoJson
-        espchrono
-        cpputils
-        espcpputils
         FastLED-idf
-        espconfiglib
-        espwifistack
-        esphttpdutils
-        mdns
-        mqtt
+        TFT_eSPI
+        app_update
+        arduino-esp32
+        cpputils
+        esp-gui-lib
         esp_app_format
+        esp_system
+        espchrono
+        espconfiglib
+        espcpputils
+        espfontlib
+        esphttpdutils
+        esptftlib
+        espwifistack
+        freertos
+        mdns
+        sunset-idf
 )
 
 idf_component_register(
@@ -49,4 +53,5 @@ target_compile_options(${COMPONENT_TARGET}
         -Wno-missing-field-initializers
         -Wno-parentheses
         -DVERSION=\"${GIT_VERSION}\"
+        -DAPP_NAME=\"${APP_NAME}\"
 )
