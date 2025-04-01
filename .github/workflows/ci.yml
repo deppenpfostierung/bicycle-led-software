@@ -38,3 +38,33 @@ jobs:
           cd ../
           . export.sh
           idf.py --version
+
+  get-configs:
+    name: Get Configs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Get configs
+        run: |
+          CONFIGS=$(./switchconf.sh --list) # outputs the list of configs separated by spaces
+          # format it to json array
+          CONFIGS=$(echo $CONFIGS | sed 's/ /", "/g')
+          CONFIGS="[\"$CONFIGS\"]"
+          # set the output variable
+          echo "configs=$CONFIGS" >> $GITHUB_ENV
+
+  build:
+    name: Build ${{ matrix.config }}
+    runs-on: ubuntu-latest
+    needs: [setup-idf, get-configs]
+    strategy:
+      matrix:
+        config: ${{ fromJson(env.configs) }}
+    steps:
+      - name: Print matrix
+        env:
+          CONFIG: ${{ matrix.config }}
+        run:
+          echo "Matrix config: ${CONFIG}"
