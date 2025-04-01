@@ -68,5 +68,5 @@ jobs:
       - name: Print matrix
         env:
           CONFIG: ${{ matrix.config }}
-        run:
+        run: |
           echo "Matrix config: ${CONFIG}"
