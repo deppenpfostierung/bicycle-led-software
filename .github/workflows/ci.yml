@@ -9,6 +9,7 @@ on:
 
 jobs:
   setup-idf:
+    name: Setup ESP-IDF
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -25,8 +26,9 @@ jobs:
 
       - name: Cache esp-idf
         uses: actions/cache@v4
+        working-directory: ${{ home }}
         with:
-          path: $HOME/.espressif
+          path: .espressif
           key: esp-idf-${{ env.idf_version }}
 
       - name: Set up ESP-IDF
