@@ -85,6 +85,8 @@ jobs:
               exit 1
           fi
           
+          . export.sh
+          
           # Build the firmware
           idf.py build
 
