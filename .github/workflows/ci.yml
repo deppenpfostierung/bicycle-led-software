@@ -23,10 +23,11 @@ jobs:
           cd esp-idf
           idf_version=$(git rev-parse HEAD)
           echo "idf_version=$idf_version" >> $GITHUB_ENV
+          echo "home=$HOME" >> $GITHUB_ENV
 
       - name: Cache esp-idf
         uses: actions/cache@v4
-        working-directory: ${{ home }}
+        working-directory: ${{ env.home }}
         with:
           path: .espressif
           key: esp-idf-${{ env.idf_version }}
