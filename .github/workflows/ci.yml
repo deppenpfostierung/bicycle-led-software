@@ -67,15 +67,12 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
       - name: Get home directory
         id: get-home
         run: echo "home=$HOME" >> $GITHUB_ENV
-
-      - name: Checkout esp-idf
-        run: |
-          # Get the commit hash of the ./esp-idf submodule without checking it out
-          git submodule update --init --recursive -- esp-idf esp-protocols
 
       - name: Restore esp-idf cache
         uses: actions/cache/restore@v4
