@@ -58,7 +58,7 @@ jobs:
           CONFIGS="[\"$CONFIGS\"]"
           echo "CONFIGS: $CONFIGS"
           # set the output variable
-          echo "configs=$CONFIGS" >> $GITHUB_OUTPUT
+          echo "configs=$CONFIGS" >> "$GITHUB_OUTPUT"
 
   build:
     name: Build ${{ matrix.config }}
