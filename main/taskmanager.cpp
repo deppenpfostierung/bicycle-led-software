@@ -4,6 +4,7 @@
 #include <esp_log.h>
 
 // local includes
+#include "input/dpad.h"
 #include "screen.h"
 #include "wifi.h"
 
@@ -22,8 +23,9 @@ void noop()
 }
 
 SchedulerTask schedulerTaskArr[] {
-    SchedulerTask { "wifi",           wifi::begin, wifi::update,          100ms },
-    SchedulerTask { "display_update", noop,        bicycle::screen::loop, 16ms  },
+    SchedulerTask { "wifi",           wifi::begin,   wifi::update,          100ms },
+    SchedulerTask { "display_update", noop,          bicycle::screen::loop, 16ms  },
+    SchedulerTask { "dpad",           buttons::init, buttons::update,       30ms  },
 };
 } // namespace
 
