@@ -62,6 +62,13 @@ void init()
     setBootMessage("Starting up...");
 }
 
+void reinit_tft()
+{
+    tft.init();
+    if (espgui::currentDisplay)
+        espgui::currentDisplay->initScreen(tft);
+}
+
 void loop()
 {
     if (tft.getRotation() != (configs.display.rotated.value() ? 1 : 3))

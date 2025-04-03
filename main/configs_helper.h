@@ -6,6 +6,11 @@
 #include <configwrapper.h>
 #include <espwifistack.h>
 
+// local includes
+#include "enums.h"
+#include "input/buttons.h"
+#include "input/dpadimpl.h"
+
 using namespace std::chrono_literals;
 using namespace espconfig;
 
@@ -231,4 +236,63 @@ public:
             return {};
         }
     } staticDns2;
+};
+
+constexpr auto INPUT_BUTTON_NONE = std::numeric_limits<uint8_t>::max();
+
+class DpadConfig
+{
+public:
+    DpadConfig(const char *buttonIdKey, const char *actionKey)
+        :
+    buttonId{ buttonIdKey },
+    action{ actionKey }
+    {}
+
+    struct : ConfigWrapperDynamicKey<uint8_t>
+    {
+        using ConfigWrapperDynamicKey::ConfigWrapperDynamicKey;
+
+        bool allowReset() const final
+        {
+            return true;
+        }
+        value_t defaultValue() const final
+        {
+            return INPUT_BUTTON_NONE;
+        }
+        ConfigConstraintReturnType checkValue(value_t value) const final
+        {
+            if (value == INPUT_BUTTON_NONE)
+            {
+                return {};
+            }
+
+            if (value < std::to_underlying(bicycle::BicycleButton::Custom1) ||
+                value > std::to_underlying(bicycle::BicycleButton::Custom12))
+            {
+                return std::unexpected("Invalid button ID");
+            }
+
+            return {};
+        }
+    } buttonId;
+
+    struct : ConfigWrapperDynamicKey<ButtonAction>
+    {
+        using ConfigWrapperDynamicKey::ConfigWrapperDynamicKey;
+
+        bool allowReset() const final
+        {
+            return true;
+        }
+        value_t defaultValue() const final
+        {
+            return ButtonAction::Unused;
+        }
+        ConfigConstraintReturnType checkValue(value_t value) const final
+        {
+            return {};
+        }
+    } action;
 };

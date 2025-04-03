@@ -51,6 +51,42 @@ public:
         } rotated;
     } display;
 
+    // ======== DPAD ======== //
+    struct
+    {
+#define DPAD_BUTTON(name, key) \
+        struct : ConfigWrapper<uint8_t> \
+        { \
+            bool allowReset() const final { return true; } \
+            const char *nvsName() const final { return key; } \
+            value_t defaultValue() const final { return INPUT_BUTTON_NONE; } \
+            ConfigConstraintReturnType checkValue(value_t value) const final { return {}; } \
+        } name;
+
+#define DPAD_CUSTOM_BUTTON(name, buttonIdKey, actionKey) \
+        DpadConfig name{buttonIdKey, actionKey};
+
+        DPAD_BUTTON(mappingLeft, "mapLeftBtn");
+        DPAD_BUTTON(mappingRight, "mapRightBtn");
+        DPAD_BUTTON(mappingUp, "mapUpBtn");
+        DPAD_BUTTON(mappingDown, "mapDownBtn");
+        DPAD_CUSTOM_BUTTON(mappingCustom1, "mapCustom1btn", "mapCustom1act");
+        DPAD_CUSTOM_BUTTON(mappingCustom2, "mapCustom2btn", "mapCustom2act");
+        DPAD_CUSTOM_BUTTON(mappingCustom3, "mapCustom3btn", "mapCustom3act");
+        DPAD_CUSTOM_BUTTON(mappingCustom4, "mapCustom4btn", "mapCustom4act");
+        DPAD_CUSTOM_BUTTON(mappingCustom5, "mapCustom5btn", "mapCustom5act");
+        DPAD_CUSTOM_BUTTON(mappingCustom6, "mapCustom6btn", "mapCustom6act");
+        DPAD_CUSTOM_BUTTON(mappingCustom7, "mapCustom7btn", "mapCustom7act");
+        DPAD_CUSTOM_BUTTON(mappingCustom8, "mapCustom8btn", "mapCustom8act");
+        DPAD_CUSTOM_BUTTON(mappingCustom9, "mapCustom9btn", "mapCustom9act");
+        DPAD_CUSTOM_BUTTON(mappingCustom10, "mapCustom10btn", "mapCustom10act");
+        DPAD_CUSTOM_BUTTON(mappingCustom11, "mapCustom11btn", "mapCustom11act");
+        DPAD_CUSTOM_BUTTON(mappingCustom12, "mapCustom12btn", "mapCustom12act");
+
+#undef DPAD_BUTTON
+#undef DPAD_CUSTOM_BUTTON
+    } dpad;
+
     // ======== TIME ======== //
     struct
     {
@@ -215,6 +251,36 @@ public:
 
         // DISPLAY
         REGISTER_CONFIG(display.rotated);
+
+        // DPAD
+        REGISTER_CONFIG(dpad.mappingLeft);
+        REGISTER_CONFIG(dpad.mappingRight);
+        REGISTER_CONFIG(dpad.mappingUp);
+        REGISTER_CONFIG(dpad.mappingDown);
+        REGISTER_CONFIG(dpad.mappingCustom1.buttonId);
+        REGISTER_CONFIG(dpad.mappingCustom1.action);
+        REGISTER_CONFIG(dpad.mappingCustom2.buttonId);
+        REGISTER_CONFIG(dpad.mappingCustom2.action);
+        REGISTER_CONFIG(dpad.mappingCustom3.buttonId);
+        REGISTER_CONFIG(dpad.mappingCustom3.action);
+        REGISTER_CONFIG(dpad.mappingCustom4.buttonId);
+        REGISTER_CONFIG(dpad.mappingCustom4.action);
+        REGISTER_CONFIG(dpad.mappingCustom5.buttonId);
+        REGISTER_CONFIG(dpad.mappingCustom5.action);
+        REGISTER_CONFIG(dpad.mappingCustom6.buttonId);
+        REGISTER_CONFIG(dpad.mappingCustom6.action);
+        REGISTER_CONFIG(dpad.mappingCustom7.buttonId);
+        REGISTER_CONFIG(dpad.mappingCustom7.action);
+        REGISTER_CONFIG(dpad.mappingCustom8.buttonId);
+        REGISTER_CONFIG(dpad.mappingCustom8.action);
+        REGISTER_CONFIG(dpad.mappingCustom9.buttonId);
+        REGISTER_CONFIG(dpad.mappingCustom9.action);
+        REGISTER_CONFIG(dpad.mappingCustom10.buttonId);
+        REGISTER_CONFIG(dpad.mappingCustom10.action);
+        REGISTER_CONFIG(dpad.mappingCustom11.buttonId);
+        REGISTER_CONFIG(dpad.mappingCustom11.action);
+        REGISTER_CONFIG(dpad.mappingCustom12.buttonId);
+        REGISTER_CONFIG(dpad.mappingCustom12.action);
 
         // TIME
         REGISTER_CONFIG(time.offset);

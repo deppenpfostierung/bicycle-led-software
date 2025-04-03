@@ -31,7 +31,7 @@ SchedulerTask schedulerTaskArr[] {
 
 cpputils::ArrayView<SchedulerTask> schedulerTasks { std::begin(schedulerTaskArr), std::end(schedulerTaskArr) };
 
-void sched_pushStats(bool printTasks)
+void sched_pushStats(const bool printTasks)
 {
     if (printTasks)
         ESP_LOGI(TAG, "Task stats:");
