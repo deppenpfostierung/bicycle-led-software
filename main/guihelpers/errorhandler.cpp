@@ -11,7 +11,8 @@ namespace bicycle::gui
 void BicycleErrorHandler::errorOccurred(std::string &&error)
 {
     espgui::changeScreenCallback = [error_ = std::move(error)](espgui::TftInterface &tft) {
-        auto newDisplay = std::make_unique<BicyclePopupDisplay>(std::string{error_}, std::move(espgui::currentDisplay));
+        auto newDisplay =
+            std::make_unique<BicyclePopupDisplay>(std::string { error_ }, std::move(espgui::currentDisplay));
         newDisplay->initOverlay(tft);
         espgui::currentDisplay = std::move(newDisplay);
     };

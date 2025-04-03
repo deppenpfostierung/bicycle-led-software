@@ -7,9 +7,11 @@
 #include "configs.h"
 #include "screen.h"
 
-namespace bicycle {
+namespace bicycle
+{
 
-namespace {
+namespace
+{
 constexpr const char TAG[] = "BUTTONS";
 } // namespace
 
@@ -74,7 +76,7 @@ void handleButtonLongPress(const espgui::Button button)
     case espgui::Button::Left:
     case espgui::Button::Up:
     case espgui::Button::Down:
-            break;
+        break;
     default:;
     }
 }

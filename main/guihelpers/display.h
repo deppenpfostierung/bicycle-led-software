@@ -9,6 +9,7 @@ namespace bicycle::gui
 class BicycleDisplay : public espgui::Display
 {
     using Base = espgui::Display;
+
 public:
     void rawButtonPressed(uint8_t button) override;
     void rawButtonReleased(uint8_t button) override;

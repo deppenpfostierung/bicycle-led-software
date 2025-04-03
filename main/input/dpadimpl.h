@@ -109,7 +109,5 @@ void Dpad<Nin, Nout, pinsIn, pinsOut>::update()
 template <std::size_t Nin, std::size_t Nout, std::array<pin_t, Nin> pinsIn, std::array<pin_t, Nout> pinsOut>
 void Dpad<Nin, Nout, pinsIn, pinsOut>::outPinModeAll(const uint8_t mode)
 {
-    std::for_each(pinsIn.begin(), pinsIn.end(), [&mode](const auto& pinIn) {
-        pinMode(pinIn, mode);
-    });
+    std::for_each(pinsIn.begin(), pinsIn.end(), [&mode](const auto &pinIn) { pinMode(pinIn, mode); });
 }

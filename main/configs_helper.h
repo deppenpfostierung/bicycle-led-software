@@ -244,10 +244,10 @@ class DpadConfig
 {
 public:
     DpadConfig(const char *buttonIdKey, const char *actionKey)
-        :
-    buttonId{ buttonIdKey },
-    action{ actionKey }
-    {}
+        : buttonId { buttonIdKey }
+        , action { actionKey }
+    {
+    }
 
     struct : ConfigWrapperDynamicKey<uint8_t>
     {
@@ -268,8 +268,8 @@ public:
                 return {};
             }
 
-            if (value < std::to_underlying(bicycle::BicycleButton::Custom1) ||
-                value > std::to_underlying(bicycle::BicycleButton::Custom12))
+            if (value < std::to_underlying(bicycle::BicycleButton::Custom1)
+                || value > std::to_underlying(bicycle::BicycleButton::Custom12))
             {
                 return std::unexpected("Invalid button ID");
             }

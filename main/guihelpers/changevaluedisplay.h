@@ -9,10 +9,8 @@
 
 namespace bicycle::gui
 {
-template<typename Tvalue>
-class BicycleChangeValueDisplay :
-        public espgui::ChangeValueDisplay<Tvalue>,
-        public virtual ErrorHandler
+template <typename Tvalue>
+class BicycleChangeValueDisplay : public espgui::ChangeValueDisplay<Tvalue>, public virtual ErrorHandler
 {
     using Base = espgui::ChangeValueDisplay<Tvalue>;
 
@@ -24,31 +22,27 @@ public:
     void buttonReleased(espgui::Button button) override;
 };
 
-template<typename Tvalue>
-void BicycleChangeValueDisplay<Tvalue>::rawButtonPressed(uint8_t button)
+template <typename Tvalue> void BicycleChangeValueDisplay<Tvalue>::rawButtonPressed(uint8_t button)
 {
     if (const auto translated = translateRawButton(button))
         buttonPressed(*translated);
 }
 
-template<typename Tvalue>
-void BicycleChangeValueDisplay<Tvalue>::rawButtonReleased(uint8_t button)
+template <typename Tvalue> void BicycleChangeValueDisplay<Tvalue>::rawButtonReleased(uint8_t button)
 {
     if (const auto translated = translateRawButton(button))
         buttonReleased(*translated);
 }
 
-template<typename Tvalue>
-void BicycleChangeValueDisplay<Tvalue>::buttonPressed(espgui::Button button)
+template <typename Tvalue> void BicycleChangeValueDisplay<Tvalue>::buttonPressed(espgui::Button button)
 {
     Base::buttonPressed(button);
     buttonPressedCommon(button);
 }
 
-template<typename Tvalue>
-void BicycleChangeValueDisplay<Tvalue>::buttonReleased(espgui::Button button)
+template <typename Tvalue> void BicycleChangeValueDisplay<Tvalue>::buttonReleased(espgui::Button button)
 {
     Base::buttonReleased(button);
     buttonReleasedCommon(button);
 }
-}
+} // namespace bicycle::gui

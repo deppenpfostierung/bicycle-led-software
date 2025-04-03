@@ -17,4 +17,4 @@ public:
     void buttonPressed(espgui::Button button) override;
     void buttonReleased(espgui::Button button) override;
 };
-}   // namespace bicycle::gui
+} // namespace bicycle::gui
