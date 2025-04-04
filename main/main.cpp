@@ -16,9 +16,10 @@ constexpr const char *const TAG = "main";
 #include "configs.h"
 #include "global_lock.h"
 #include "screen.h"
+#include "screens/menus/mainmenu.h"
 #include "taskmanager.h"
 
-extern "C" void app_main()
+extern "C" void [[noreturn]] app_main()
 {
     using namespace bicycle;
     using namespace screen;
@@ -61,7 +62,7 @@ extern "C" void app_main()
 
     setBootMessage("Bootup complete");
 
-    // espgui::switchScreen<gui::MainMenu>();
+    espgui::switchScreen<gui::MainMenu>();
 
     espchrono::millis_clock::time_point lastTaskPush = espchrono::millis_clock::now();
 

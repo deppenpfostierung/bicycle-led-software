@@ -71,9 +71,9 @@ void reinit_tft()
 
 void loop()
 {
-    if (tft.getRotation() != (configs.display.rotated.value() ? 1 : 3))
+    if (tft.getRotation() != (configs.display.rotated.value() ? 0 : 2))
     {
-        tft.setRotation(configs.display.rotated.value() ? 1 : 3);
+        tft.setRotation(configs.display.rotated.value() ? 0 : 2);
 
         if (espgui::currentDisplay)
             espgui::currentDisplay->initScreen(tft);
