@@ -9,10 +9,11 @@ namespace bicycle::gui
 class MainMenu : public BicycleMenuDisplay
 {
     using Base = BicycleMenuDisplay;
+
 public:
     MainMenu();
 
-    void back() override;
+    void back() override {}
 
     std::string title() const override;
 };

@@ -24,6 +24,8 @@ extern "C" void [[noreturn]] app_main()
     using namespace bicycle;
     using namespace screen;
 
+    esp_log_level_set("SCREENMANAGER", ESP_LOG_DEBUG);
+
 #if defined(CONFIG_ESP_TASK_WDT_PANIC) || defined(CONFIG_ESP_TASK_WDT)
     {
         const auto taskHandle = xTaskGetCurrentTaskHandle();

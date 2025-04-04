@@ -10,7 +10,7 @@ void init();
 
 void reinit_tft();
 
-void loop();
+void update();
 
 void setBootMessage(std::string_view message);
 

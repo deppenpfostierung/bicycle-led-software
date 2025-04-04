@@ -19,9 +19,9 @@ public:
     void buttonPressed(espgui::Button button) override;
     void buttonReleased(espgui::Button button) override;
 
-    void rotaryEvent(espgui::RotaryEvent rotaryEvent) override
+    /*void rotaryEvent(espgui::RotaryEvent rotaryEvent) override
     {
-    }
+    }*/
 };
 
 } // namespace bicycle::gui

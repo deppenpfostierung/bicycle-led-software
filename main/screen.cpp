@@ -51,9 +51,15 @@ void init()
 
     ESP_LOGI(TAG, "Fill with white");
 
-    tft.fillScreen(espgui::TFT_WHITE);
+    tft.fillScreen(espgui::TFT_BLACK);
 
     ESP_LOGI(TAG, "Push image");
+    constexpr auto border = 2;
+    tft.fillRect(centered - border,
+                 10 - border,
+                 icons::bootlogo.WIDTH + border * 2,
+                 icons::bootlogo.HEIGHT + border * 2,
+                 espgui::TFT_WHITE);
     tft.pushImage(centered, 10, icons::bootlogo.WIDTH, icons::bootlogo.HEIGHT, icons::bootlogo.buffer);
 
     ESP_LOGI(TAG, "Setup label");
@@ -69,7 +75,7 @@ void reinit_tft()
         espgui::currentDisplay->initScreen(tft);
 }
 
-void loop()
+void update()
 {
     if (tft.getRotation() != (configs.display.rotated.value() ? 0 : 2))
     {
@@ -89,6 +95,7 @@ void loop()
         if (espgui::changeScreenCallback)
         {
             espgui::changeScreenCallback(tft);
+            ESP_LOGE(TAG, "clearing changeScreenCallback");
             espgui::changeScreenCallback = {};
         }
     }
@@ -105,7 +112,7 @@ void loop()
 void setBootMessage(const std::string_view message)
 {
     ESP_LOGI(TAG, "Boot message: %.*s", static_cast<int>(message.size()), message.data());
-    bootLabel->redraw(tft, message, espgui::TFT_BLACK, espgui::TFT_WHITE, 4);
+    bootLabel->redraw(tft, message, espgui::TFT_WHITE, espgui::TFT_BLACK, 4);
 }
 
 } // namespace bicycle::screen
