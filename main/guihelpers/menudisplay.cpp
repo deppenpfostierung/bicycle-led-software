@@ -28,7 +28,7 @@ void BicycleMenuDisplay::buttonPressed(espgui::Button button)
 
 void BicycleMenuDisplay::buttonReleased(espgui::Button button)
 {
-    // Base::buttonReleased(button);
+    Base::buttonReleased(button);
     buttonReleasedCommon(button);
 }
 
