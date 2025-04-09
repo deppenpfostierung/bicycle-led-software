@@ -20,4 +20,6 @@ extern Dpad<IN_PINS.size(), OUT_PINS.size(), IN_PINS, OUT_PINS> dpad;
 void init();
 void update();
 
+bool isValidConfig();
+
 } // namespace bicycle::buttons

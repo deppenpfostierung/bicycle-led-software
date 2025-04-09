@@ -13,7 +13,9 @@ class MainMenu : public BicycleMenuDisplay
 public:
     MainMenu();
 
-    void back() override {}
+    void back() override
+    {
+    }
 
     std::string title() const override;
 };

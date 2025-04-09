@@ -25,9 +25,9 @@ void noop()
 
 SchedulerTask schedulerTaskArr[] {
     SchedulerTask { "display_update", noop,          bicycle::screen::update, 16ms  },
-    SchedulerTask { "debugconsole",   debug::init,    debug::update,    50ms },
-    SchedulerTask { "wifi",           wifi::begin,   wifi::update,          100ms },
-    SchedulerTask { "dpad",           buttons::init, buttons::update,       30ms  },
+    SchedulerTask { "debugconsole",   debug::init,   debug::update,           50ms  },
+    SchedulerTask { "wifi",           wifi::begin,   wifi::update,            100ms },
+    SchedulerTask { "dpad",           buttons::init, buttons::update,         30ms  },
 };
 } // namespace
 

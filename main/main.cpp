@@ -15,7 +15,9 @@ constexpr const char *const TAG = "main";
 // local includes
 #include "configs.h"
 #include "global_lock.h"
+#include "input/dpad.h"
 #include "screen.h"
+#include "screens/configurebasicbuttondisplay.h"
 #include "screens/menus/mainmenu.h"
 #include "taskmanager.h"
 
@@ -64,7 +66,14 @@ extern "C" void [[noreturn]] app_main()
 
     setBootMessage("Bootup complete");
 
-    espgui::switchScreen<gui::MainMenu>();
+    if (buttons::isValidConfig())
+    {
+        espgui::switchScreen<gui::MainMenu>();
+    }
+    else
+    {
+        espgui::switchScreen<gui::ConfigureBasicButtonDisplay>();
+    }
 
     espchrono::millis_clock::time_point lastTaskPush = espchrono::millis_clock::now();
 

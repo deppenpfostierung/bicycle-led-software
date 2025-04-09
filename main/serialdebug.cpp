@@ -49,7 +49,7 @@ void update()
     if (!uart0InitDone)
         return;
 
-    size_t length{};
+    size_t length {};
 
     if (const auto result = uart_get_buffered_data_len(UART_NUM_0, &length); result != ESP_OK)
     {
@@ -60,22 +60,20 @@ void update()
         char data[length];
         length = uart_read_bytes(UART_NUM_0, data, length, 0);
 
-        for (char c : std::string_view{data, length})
+        for (char c : std::string_view { data, length })
         {
             if (consoleControlCharsReceived < 2)
             {
                 switch (c)
                 {
-                case '\x1b':
-                {
+                case '\x1b': {
                     if (consoleControlCharsReceived == 0)
                         consoleControlCharsReceived = 1;
                     else
                         consoleControlCharsReceived = 0;
                     break;
                 }
-                case '\x5b':
-                {
+                case '\x5b': {
                     if (consoleControlCharsReceived == 1)
                         consoleControlCharsReceived = 2;
                     else
