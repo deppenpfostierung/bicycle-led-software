@@ -1,5 +1,7 @@
 #include "serialdebug.h"
 
+#include <sdkconfig.h>
+
 // system includes
 #include <string_view>
 
@@ -130,6 +132,7 @@ void handleNormalChar(char c)
         case 'I':
             screen::reinit_tft();
             break;
+#ifdef CONFIG_RESET_VIA_CONSOLE
         case 's':
         case 'S':
             if (const auto res = configs.reset(); res)
@@ -137,6 +140,7 @@ void handleNormalChar(char c)
             else
                 ESP_LOGE(TAG, "Error when resetting configs: %s", res.error().c_str());
             break;
+#endif
         }
     }
 }

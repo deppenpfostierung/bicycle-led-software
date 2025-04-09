@@ -11,6 +11,13 @@ menu "Bicycle LED Board"
 
     endchoice
 
+    config RESET_VIA_CONSOLE
+        bool "Expose nvs reset via UART (key \"s\")"
+        default false
+        help
+            This option allows you to reset the NVS configuration via the console.
+            This is useful for debugging and development purposes.
+
     menu "Defaults"
 
         config BICYCLE_DEFAULT_LED_LENGTH
