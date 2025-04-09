@@ -63,5 +63,6 @@ for icon in ./icons/*; do
         filename_no_ext="${filename%.*}"
         echo "Converting $filename to $filename_no_ext.h and $filename_no_ext.cpp"
         docker run --rm -v "$(pwd):/data" $DOCKER_IMAGE -i "$icon" -o "/data/main/icons/$filename_no_ext.cpp" --swap
+        docker run --rm -v "$(pwd):/data" $DOCKER_IMAGE -i "$icon" -o "/data/main/icons/${filename_no_ext}_grey.cpp" --swap --background "#3c3c3c"
     fi
 done
