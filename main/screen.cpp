@@ -68,6 +68,7 @@ void init()
     setBootMessage("Starting up...");
 }
 
+// TODO: Try to investigate why this does not work
 void reinit_tft()
 {
     tft.init();
