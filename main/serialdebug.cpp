@@ -12,6 +12,7 @@
 #include <screenmanager.h>
 
 // local includes
+#include "configs.h"
 #include "screen.h"
 
 namespace bicycle::debug
@@ -128,6 +129,13 @@ void handleNormalChar(char c)
         case 'i':
         case 'I':
             screen::reinit_tft();
+            break;
+        case 's':
+        case 'S':
+            if (const auto res = configs.reset(); res)
+                ESP_LOGI(TAG, "Successfully reset configs");
+            else
+                ESP_LOGE(TAG, "Error when resetting configs: %s", res.error().c_str());
             break;
         }
     }
