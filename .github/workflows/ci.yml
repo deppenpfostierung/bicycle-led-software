@@ -59,42 +59,6 @@ jobs:
           cd ../
           . export.sh
           idf.py --version
-          
-  check-sdkconfigs:
-    name: Check sdkconfig
-    runs-on: ubuntu-latest
-    needs: setup-idf
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          submodules: recursive
-
-      - name: Get home directory
-        id: get-home
-        run: echo "home=$HOME" >> $GITHUB_ENV
-
-      - name: Restore esp-idf cache
-        uses: actions/cache/restore@v4
-        with:
-          path: ${{ env.home }}/.espressif
-          key: ${{ runner.os }}-esp-idf-${{ needs.setup-idf.outputs.idf_version }}
-          fail-on-cache-miss: true
-
-      - name: Check sdkconfig
-        run: |
-          . export.sh
-          
-          idf.py --version
-          
-          # Check if the sdkconfig is in the correct format
-          ./update_all_sdkconfigs.py
-          
-          # fail if the repo is dirty
-          if [ -n "$(git status --porcelain)" ]; then
-              echo "The repo is dirty. Please commit the changes."
-              exit 1
-          fi
 
   clang-format:
     name: Clang format
@@ -165,6 +129,17 @@ jobs:
           key: ${{ runner.os }}-esp-idf-${{ needs.setup-idf.outputs.idf_version }}
           fail-on-cache-miss: true
 
+      - name: Cache ccache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ${{ env.home }}/.ccache
+          key: ${{ runner.os }}-ccache-${{ needs.setup-idf.outputs.idf_version }}
+          restore-keys: |
+              ${{ runner.os }}-ccache-${{ needs.setup-idf.outputs.idf_version }}
+              ${{ runner.os }}-ccache-
+              ${{ runner.os }}-ccache
+
       - name: Compile firmware
         run: |
           # Set the config
@@ -178,8 +153,10 @@ jobs:
           
           . export.sh
           
+          export CCACHE_MAXSIZE=1024M
+          
           # Build the firmware
-          idf.py build
+          idf.py --ccache build
           
           # Check if the repo is dirty
           if [ -n "$(git status --porcelain)" ]; then
