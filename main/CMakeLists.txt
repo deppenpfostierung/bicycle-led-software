@@ -25,6 +25,8 @@ set(dependencies
         freertos
         mdns
         sunset-idf
+        ads111x
+        pca9685
 )
 
 idf_component_register(

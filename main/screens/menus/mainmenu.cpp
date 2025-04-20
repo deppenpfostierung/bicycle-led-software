@@ -22,7 +22,11 @@ MainMenu::MainMenu()
 {
     using namespace espgui;
 
-    constructMenuItem<makeComponent<MenuItem, StaticText<TEXT_SETTINGS>, DummyAction, StaticMenuItemIcon<&icons::settings, &icons::settings_grey>, StaticMenuItemSelectedIcon<&icons::arrow>>>();
+    constructMenuItem<makeComponent<MenuItem,
+                                    StaticText<TEXT_SETTINGS>,
+                                    DummyAction,
+                                    StaticMenuItemIcon<&icons::settings, &icons::settings_grey>,
+                                    StaticMenuItemSelectedIcon<&icons::arrow>>>();
     constructMenuItem<makeComponent<MenuItem, StaticText<TEXT_TEST>, DummyAction>>();
     constructMenuItem<makeComponent<MenuItem, StaticText<TEXT_TEST>, DummyAction>>();
     constructMenuItem<makeComponent<MenuItem, StaticText<TEXT_TEST>, DummyAction>>();

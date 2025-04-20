@@ -55,3 +55,6 @@
 [submodule "components/sunset-idf"]
 	path = components/sunset-idf
 	url = ../../CommanderRedYT/sunset-idf.git
+[submodule "components/esp-idf-lib"]
+	path = components/esp-idf-lib
+	url = ../../UncleRus/esp-idf-lib.git

@@ -21,6 +21,7 @@ add_definitions(-DFASTLED_ESP32_FLASH_LOCK=1)
 
 set(EXTRA_COMPONENT_DIRS
     esp-protocols/components
+    components/esp-idf-lib/components
 )
 
 project(${APP_NAME})
