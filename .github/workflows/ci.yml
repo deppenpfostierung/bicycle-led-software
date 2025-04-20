@@ -120,7 +120,7 @@ jobs:
 
       - name: Install ccache
         run: |
-          apt install -y ccache
+          sudo apt install -y ccache
 
       - name: Get home directory
         id: get-home
