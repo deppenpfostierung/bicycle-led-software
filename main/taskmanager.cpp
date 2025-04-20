@@ -29,7 +29,7 @@ SchedulerTask schedulerTaskArr[] {
     SchedulerTask { "debugconsole",   debug::init,                 debug::update,                 50ms  },
     SchedulerTask { "wifi",           wifi::begin,                 wifi::update,                  100ms },
     SchedulerTask { "dpad",           buttons::init,               buttons::update,               30ms  },
-    SchedulerTask { "portexpander",   hardware::init_portexpander, hardware::update_portexpander, 16ms },
+    SchedulerTask { "portexpander",   hardware::init_portexpander, hardware::update_portexpander, 16ms  },
 };
 } // namespace
 

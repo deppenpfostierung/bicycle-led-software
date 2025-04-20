@@ -53,7 +53,7 @@ esp_err_t internal_init_portexpander()
         return res;
     }
 
-    uint16_t configuredFrequency{0};
+    uint16_t configuredFrequency { 0 };
 
     if (const auto res = pca9685_get_pwm_frequency(&i2cPortExpander, &configuredFrequency); res != ESP_OK)
     {
@@ -67,7 +67,9 @@ esp_err_t internal_init_portexpander()
     }
     else
     {
-        ESP_LOGW(TAG, "PCA9685 frequency set to %u Hz, expected %u Hz", configuredFrequency,
+        ESP_LOGW(TAG,
+                 "PCA9685 frequency set to %u Hz, expected %u Hz",
+                 configuredFrequency,
                  CONFIG_BICYCLE_GPIO_EXPANDER_PWM_FREQ_HZ);
     }
 
