@@ -53,7 +53,7 @@ menu "Bicycle LED Board"
 
         config BICYCLE_GPIO_EXPANDER_ADDRESS
             hex "GPIO expander I2C address"
-            default 0x0C if BICYCLE_BOARD_REVISION_V1
+            default 0x70 if BICYCLE_BOARD_REVISION_V1
             help
                 The I2C address of the GPIO expander. The default is 0x0C (00001100b).
 

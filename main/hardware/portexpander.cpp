@@ -24,7 +24,7 @@ i2c_dev_t i2cPortExpander;
 esp_err_t internal_init_portexpander()
 {
     if (const auto res = pca9685_init_desc(&i2cPortExpander,
-                                           0x70,
+                                           CONFIG_BICYCLE_GPIO_EXPANDER_ADDRESS,
                                            I2C_NUM_0,
                                            static_cast<gpio_num_t>(CONFIG_BICYCLE_PIN_I2C_SDA),
                                            static_cast<gpio_num_t>(CONFIG_BICYCLE_PIN_I2C_SCL));
