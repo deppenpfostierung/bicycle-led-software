@@ -117,6 +117,10 @@ jobs:
         with:
           submodules: recursive
 
+      - name: Install ccache
+        run: |
+          apt install -y ccache
+
       - name: Get home directory
         id: get-home
         run: echo "home=$HOME" >> $GITHUB_ENV
@@ -157,6 +161,8 @@ jobs:
           # Build the firmware
           idf.py --ccache build
           
+          ccache -s
+          
           # Check if the repo is dirty
           if [ -n "$(git status --porcelain)" ]; then
               echo "The repo is dirty."
@@ -168,5 +174,5 @@ jobs:
         with:
           name: firmware-${{ matrix.config }}
           path: |
-            build/bicycle-${{ matrix.config }}.bin
-            build/bicycle-${{ matrix.config }}.elf
+            build/bicycle-board.bin
+            build/bicycle-board.elf
