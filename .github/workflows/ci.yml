@@ -133,8 +133,9 @@ jobs:
           key: ${{ runner.os }}-esp-idf-${{ needs.setup-idf.outputs.idf_version }}
           fail-on-cache-miss: true
 
-      - name: Cache ccache
-        uses: actions/cache@v4
+      - name: Restore ccache
+        uses: actions/cache/restore@v4
+        id: restore-ccache
         with:
           path: |
             ${{ env.home }}/.ccache
@@ -169,6 +170,14 @@ jobs:
               echo "The repo is dirty."
               exit 1
           fi
+
+      - name: Save ccache
+        uses: actions/cache/save@v4
+        if: always() && steps.restore-ccache.outputs.cache-hit != 'true'
+        with:
+          path: |
+            ${{ env.home }}/.ccache
+          key: ${{ steps.restore-ccache.outputs.cache-primary-key }}
 
       - name: Upload firmware binary
         uses: actions/upload-artifact@v4
