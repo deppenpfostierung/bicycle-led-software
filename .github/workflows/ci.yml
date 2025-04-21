@@ -173,7 +173,7 @@ jobs:
 
       - name: Save ccache
         uses: actions/cache/save@v4
-        if: always() && steps.restore-ccache.outputs.cache-hit != 'true'
+        if: always()
         with:
           path: |
             ${{ env.home }}/.ccache
