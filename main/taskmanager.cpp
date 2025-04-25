@@ -4,6 +4,8 @@
 #include <esp_log.h>
 
 // local includes
+#include "hardware/adc.h"
+#include "hardware/i2c.h"
 #include "hardware/portexpander.h"
 #include "input/dpad.h"
 #include "screen.h"
@@ -25,11 +27,13 @@ void noop()
 }
 
 SchedulerTask schedulerTaskArr[] {
-    SchedulerTask { "display_update", noop,                        bicycle::screen::update,       16ms  },
-    SchedulerTask { "debugconsole",   debug::init,                 debug::update,                 50ms  },
-    SchedulerTask { "wifi",           wifi::begin,                 wifi::update,                  100ms },
-    SchedulerTask { "dpad",           buttons::init,               buttons::update,               30ms  },
+    SchedulerTask { "i2c",            hardware::init_i2c,          hardware::update_i2c,          100ms },
     SchedulerTask { "portexpander",   hardware::init_portexpander, hardware::update_portexpander, 16ms  },
+    SchedulerTask { "adc",            hardware::init_adc,          hardware::update_adc,          100ms },
+    SchedulerTask { "dpad",           buttons::init,               buttons::update,               30ms  },
+    SchedulerTask { "debugconsole",   debug::init,                 debug::update,                 50ms  },
+    SchedulerTask { "display_update", noop,                        screen::update,                16ms  },
+    SchedulerTask { "wifi",           wifi::begin,                 wifi::update,                  100ms },
 };
 } // namespace
 

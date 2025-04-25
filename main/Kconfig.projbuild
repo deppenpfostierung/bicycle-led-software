@@ -27,7 +27,7 @@ menu "Bicycle LED Board"
                 The default length of the LED strip, used for the config.
                 The default is 288 LEDs as in 2x 144 LEDs strip.
 
-    endmenu
+    endmenu # "Defaults"
 
     menu "Pin definitions"
 
@@ -50,25 +50,6 @@ menu "Bicycle LED Board"
         config BICYCLE_PIN_I2C_SCL
             int "I2C SCL pin"
             default 17 if BICYCLE_BOARD_REVISION_V1
-
-        config BICYCLE_GPIO_EXPANDER_ADDRESS
-            hex "GPIO expander I2C address"
-            default 0x70 if BICYCLE_BOARD_REVISION_V1
-            help
-                The I2C address of the GPIO expander. The default is 0x0C (00001100b).
-
-        config BICYCLE_GPIO_EXPANDER_PWM_FREQ_HZ
-            int "GPIO expander PWM frequency"
-            default 1500
-            range 0 1600
-            help
-                The frequency of the PWM outputs on the GPIO expander.
-
-        config BICYCLE_ADC_ADDRESS
-            hex "ADC I2C address"
-            default 0x48 if BICYCLE_BOARD_REVISION_V1
-            help
-                The I2C address of the ADC. The default is 0x48 (1001000b).
 
         menu "Button pins"
 
@@ -96,8 +77,56 @@ menu "Bicycle LED Board"
                 int "Button OUT 2"
                 default 5 if BICYCLE_BOARD_REVISION_V1
 
-        endmenu
+        endmenu # "Button pins"
 
-    endmenu
+    endmenu # "Pin definitions"
+
+    menu "Hardware Config"
+
+        config BICYCLE_GPIO_EXPANDER_ADDRESS
+            hex "GPIO expander I2C address"
+            default 0x70 if BICYCLE_BOARD_REVISION_V1
+            help
+                The I2C address of the GPIO expander. The default is 0x0C (00001100b).
+
+        config BICYCLE_GPIO_EXPANDER_PWM_FREQ_HZ
+            int "GPIO expander PWM frequency"
+            default 1500
+            range 0 1600
+            help
+                The frequency of the PWM outputs on the GPIO expander.
+
+        choice BICYCLE_ADC_ADDRESS
+            prompt "ADC I2C address"
+            default BICYCLE_ADC_ADDRESS_GND
+            help
+                Select which jumper is set for the ADDR pin of the ADS1115.
+
+            config BICYCLE_ADC_ADDRESS_GND
+                bool
+                prompt "ADC I2C address GND"
+            config BICYCLE_ADC_ADDRESS_VCC
+                bool
+                prompt "ADC I2C address VCC"
+            config BICYCLE_ADC_ADDRESS_SDA
+                bool
+                prompt "ADC I2C address SDA"
+            config BICYCLE_ADC_ADDRESS_SCL
+                bool
+                prompt "ADC I2C address SCL"
+
+        endchoice
+
+    endmenu # "Hardware Config"
+
+    menu "Debug"
+
+        config BICYCLE_DEBUG_I2C
+            bool "Enable I2C debug"
+            default false
+            help
+                Enable I2C debug. Also tries to scan for i2c on startup.
+
+    endmenu # "Debug"
 
 endmenu

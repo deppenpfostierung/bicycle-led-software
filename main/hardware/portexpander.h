@@ -1,12 +1,9 @@
 #pragma once
 
-// esp-idf includes
-#include <esp_err.h>
-
 namespace bicycle::hardware
 {
 
-extern bool initialized;
+extern bool portexpander_initialized;
 
 void init_portexpander();
 
