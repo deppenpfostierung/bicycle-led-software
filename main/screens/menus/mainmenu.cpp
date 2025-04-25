@@ -2,12 +2,13 @@
 
 // 3rdparty lib includes
 #include <actions/dummyaction.h>
-#include <screenmanager.h>
+#include <actions/pushscreenaction.h>
 
 // local includes
 #include "icons/arrow.h"
 #include "icons/settings.h"
 #include "icons/settings_grey.h"
+#include "screens/menus/debugmenu.h"
 
 namespace bicycle::gui
 {
@@ -16,6 +17,7 @@ namespace
 {
 constexpr char TEXT_TEST[] = "Test";
 constexpr char TEXT_SETTINGS[] = "Settings";
+constexpr char TEXT_DEBUG[] = "Debug";
 } // namespace
 
 MainMenu::MainMenu()
@@ -35,7 +37,7 @@ MainMenu::MainMenu()
     constructMenuItem<makeComponent<MenuItem, StaticText<TEXT_TEST>, DummyAction>>();
     constructMenuItem<makeComponent<MenuItem, StaticText<TEXT_TEST>, DummyAction>>();
     constructMenuItem<makeComponent<MenuItem, StaticText<TEXT_TEST>, DummyAction>>();
-    constructMenuItem<makeComponent<MenuItem, StaticText<TEXT_TEST>, DummyAction>>();
+    constructMenuItem<makeComponent<MenuItem, StaticText<TEXT_DEBUG>, PushScreenAction<DebugMenu>>>();
 }
 
 std::string MainMenu::title() const

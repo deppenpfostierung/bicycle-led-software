@@ -9,12 +9,12 @@
 namespace bicycle::gui
 {
 
-class MainMenu : public BicycleMenuDisplay
+class DebugMenu : public BicycleMenuDisplay
 {
     using Base = BicycleMenuDisplay;
 
 public:
-    MainMenu();
+    DebugMenu();
 
     void back() override
     {

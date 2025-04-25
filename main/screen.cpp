@@ -96,7 +96,7 @@ void update()
         if (espgui::changeScreenCallback)
         {
             espgui::changeScreenCallback(tft);
-            ESP_LOGE(TAG, "clearing changeScreenCallback");
+            ESP_LOGD(TAG, "clearing changeScreenCallback");
             espgui::changeScreenCallback = {};
         }
     }

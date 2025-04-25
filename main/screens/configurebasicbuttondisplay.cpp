@@ -1,8 +1,5 @@
 #include "configurebasicbuttondisplay.h"
 
-// system includes
-#include <cmath>
-
 // esp-idf includes
 #include <esp_err.h>
 #include <esp_log.h>
@@ -12,7 +9,7 @@
 
 // local includes
 #include "configs.h"
-#include "screens/menus/mainmenu.h"
+#include "screens/startdisplay.h"
 
 constexpr const char *const TAG = "ConfigureBasicButtonDisplay";
 
@@ -123,7 +120,7 @@ void ConfigureBasicButtonDisplay::buttonPressed(const espgui::Button button)
 {
     if (button == espgui::Right && m_done)
     {
-        espgui::switchScreen<MainMenu>();
+        espgui::switchScreen<StartDisplay>();
     }
 }
 

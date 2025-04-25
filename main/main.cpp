@@ -18,7 +18,7 @@ constexpr const char *const TAG = "main";
 #include "input/dpad.h"
 #include "screen.h"
 #include "screens/configurebasicbuttondisplay.h"
-#include "screens/menus/mainmenu.h"
+#include "screens/startdisplay.h"
 #include "taskmanager.h"
 
 extern "C" void [[noreturn]] app_main()
@@ -68,7 +68,7 @@ extern "C" void [[noreturn]] app_main()
 
     if (buttons::isValidConfig())
     {
-        espgui::switchScreen<gui::MainMenu>();
+        espgui::switchScreen<gui::StartDisplay>();
     }
     else
     {
