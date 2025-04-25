@@ -161,6 +161,8 @@ jobs:
           
           export CCACHE_MAXSIZE=1024M CCACHE_DIR=${{ env.home }}/.ccache
           
+          ccache -s
+          
           # Build the firmware
           idf.py --ccache build
           
