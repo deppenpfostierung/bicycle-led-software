@@ -141,6 +141,7 @@ jobs:
             ${{ env.home }}/.ccache
           key: ${{ runner.os }}-ccache-${{ needs.setup-idf.outputs.idf_version }}
           restore-keys: |
+              ${{ runner.os }}-ccache-${{ needs.setup-idf.outputs.idf_version }}-
               ${{ runner.os }}-ccache-${{ needs.setup-idf.outputs.idf_version }}
               ${{ runner.os }}-ccache-
               ${{ runner.os }}-ccache
@@ -177,7 +178,7 @@ jobs:
         with:
           path: |
             ${{ env.home }}/.ccache
-          key: ${{ steps.restore-ccache.outputs.cache-primary-key }}
+          key: ${{ runner.os }}-ccache-${{ needs.setup-idf.outputs.idf_version }}-${{ matrix.config }}
 
       - name: Upload firmware binary
         uses: actions/upload-artifact@v4
