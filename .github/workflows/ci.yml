@@ -15,6 +15,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Install rgb565-converter via pip
+        run: |
+          # Install the rgb565-converter package
+          pip install rgb565-converter
+
       - name: Check icons
         run: |
           # Check if the icons are in the correct format
