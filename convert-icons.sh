@@ -4,8 +4,11 @@
 
 FORCE_PULL=false
 NEEDS_DOCKER=false
+DISABLE_DOCKER=true
 
 BACKGROUND="#3c3c3c"
+
+OUTPUT_DIR="./main/icons"
 
 # if not linux, use docker
 if [[ "$OSTYPE" != "linux-gnu"* ]]; then
@@ -15,17 +18,28 @@ if [[ "$OSTYPE" != "linux-gnu"* ]]; then
 fi
 
 # handle args if any
-while getopts ":f" opt; do
+while getopts ":fo:" opt; do
     case $opt in
         f)
             FORCE_PULL=true
             ;;
+
+        o)
+            OUTPUT_DIR=$OPTARG
+            ;;
+
         \?)
             echo "Invalid option: -$OPTARG" >&2
             exit 1
             ;;
     esac
 done
+
+# if OUTPUT_DIR is empty, exit
+if [[ -z "$OUTPUT_DIR" ]]; then
+    echo "ERROR: Output directory is empty."
+    exit 1
+fi
 
 # check if docker image is pulled
 DOCKER_IMAGE="ghcr.io/commanderredyt/rgb565-converter:latest"
@@ -79,11 +93,16 @@ if [[ ! -d "./icons" ]]; then
     exit 1
 fi
 
-mkdir -p ./main/icons
+mkdir -p "$OUTPUT_DIR"
 
-# check if ./main/icons/ exists
-if [[ ! -d "./main/icons" ]]; then
-    echo "Directory ./main/icons/ does not exist."
+if [[ ! -d "$OUTPUT_DIR" ]]; then
+    echo "Directory $OUTPUT_DIR does not exist."
+    exit 1
+fi
+
+# if docker is disabled, exit
+if [[ "$DISABLE_DOCKER" == true && "$NEEDS_DOCKER" == true ]]; then
+    echo "Docker usage is not tested and will most likely fail. Do not use it."
     exit 1
 fi
 
@@ -93,11 +112,11 @@ for icon in ./icons/*; do
         filename_no_ext="${filename%.*}"
         echo "Converting $filename to $filename_no_ext.h and $filename_no_ext.cpp"
         if [[ "$NEEDS_DOCKER" == true ]]; then
-            docker run --rm -v "$(pwd):/data" $DOCKER_IMAGE -i "$icon" -o "/data/main/icons/$filename_no_ext.cpp" --swap
-            docker run --rm -v "$(pwd):/data" $DOCKER_IMAGE -i "$icon" -o "/data/main/icons/${filename_no_ext}_grey.cpp" --swap --background "$BACKGROUND"
+            docker run --rm -v "$(pwd):/data" $DOCKER_IMAGE -i "$icon" -o "/data/$OUTPUT_DIR/$filename_no_ext.cpp" --swap
+            docker run --rm -v "$(pwd):/data" $DOCKER_IMAGE -i "$icon" -o "/data/$OUTPUT_DIR/${filename_no_ext}_grey.cpp" --swap --background "$BACKGROUND"
         else
-            rgb565-converter -i "$icon" -o "./main/icons/$filename_no_ext.cpp" --swap
-            rgb565-converter -i "$icon" -o "./main/icons/${filename_no_ext}_grey.cpp" --swap --background "$BACKGROUND"
+            rgb565-converter -i "$icon" -o "$OUTPUT_DIR/$filename_no_ext.cpp" --swap
+            rgb565-converter -i "$icon" -o "$OUTPUT_DIR/${filename_no_ext}_grey.cpp" --swap --background "$BACKGROUND"
         fi
     fi
 done
