@@ -30,11 +30,13 @@ jobs:
 
       - name: Cache esp-idf
         uses: actions/cache@v4
+        id: cache-idf
         with:
           path: ${{ env.home }}/.espressif
           key: ${{ runner.os }}-esp-idf-${{ env.idf_version }}
 
       - name: Set up ESP-IDF
+        if: steps.cache-idf.outputs.cache-hit != 'true'
         run: |
           cd esp-idf
           ./install.sh
