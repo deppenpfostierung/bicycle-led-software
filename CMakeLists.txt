@@ -8,6 +8,14 @@ if (NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/config.cmake)
     message(FATAL_ERROR "config.cmake not found")
 endif()
 
+if (NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/build)
+    message(FATAL_ERROR "Build folder not found. Please run './switchconf.sh' first.")
+endif()
+
+if (NOT IS_SYMLINK ${CMAKE_CURRENT_SOURCE_DIR}/build)
+    message(FATAL_ERROR "Build folder is not a symlink. Please run './switchconf.sh' first.")
+endif()
+
 include(config.cmake)
 
 include($ENV{IDF_PATH}/tools/cmake/project.cmake)

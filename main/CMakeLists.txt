@@ -45,7 +45,7 @@ set(generated_icons "")
 # the script ${CMAKE_CURRENT_SOURCE_DIR}/../convert-icons.sh will generate all of the files with a single command
 foreach(icon ${icons})
     get_filename_component(icon_name ${icon} NAME_WE)
-    set(icon_path "${CMAKE_CURRENT_BINARY_DIR}/icons/${icon_name}")
+    set(icon_path "${CMAKE_CURRENT_BINARY_DIR}/generated/icons/${icon_name}")
     set(icon_cpp "${icon_path}.cpp")
     set(icon_h "${icon_path}.h")
     set(icon_grey_cpp "${icon_path}_grey.cpp")
