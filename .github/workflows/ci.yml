@@ -127,6 +127,10 @@ jobs:
               ${{ runner.os }}-ccache-
               ${{ runner.os }}-ccache
 
+      - name: Install rgb565-converter via pip
+        run: |
+          pip install rgb565-converter
+
       - name: Compile firmware
         run: |
           # Set the config
