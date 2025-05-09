@@ -1,4 +1,5 @@
 constexpr const char *const TAG = "main";
+constexpr const char *const MEMORY_TAG = "MEMORYDEBUG";
 
 // esp-idf includes
 #include <esp_log.h>
@@ -19,6 +20,7 @@ constexpr const char *const TAG = "main";
 #include "screen.h"
 #include "screens/configurebasicbuttondisplay.h"
 #include "screens/startdisplay.h"
+#include "serialdebug.h"
 #include "taskmanager.h"
 
 extern "C" void [[noreturn]] app_main()
@@ -93,6 +95,30 @@ extern "C" void [[noreturn]] app_main()
         {
             lastTaskPush = espchrono::millis_clock::now();
             tasks::sched_pushStats(false);
+        }
+
+        if (const auto free_8bit_memory = heap_caps_get_free_size(MALLOC_CAP_INTERNAL | MALLOC_CAP_8BIT);
+            free_8bit_memory < 25000)
+        {
+            ESP_LOGW(MEMORY_TAG,
+                     "heap8bit=%zd (largest block: %zd) heap32=%zd",
+                     free_8bit_memory,
+                     heap_caps_get_largest_free_block(MALLOC_CAP_INTERNAL | MALLOC_CAP_8BIT),
+                     heap_caps_get_free_size(MALLOC_CAP_INTERNAL | MALLOC_CAP_32BIT));
+        }
+        else
+        {
+            if (debug::memoryDebugMode != debug::MemoryDebugMode::Off
+                && espchrono::ago(debug::lastMemoryDebugMessage)
+                       >= (debug::memoryDebugMode == debug::MemoryDebugMode::Fast ? 100ms : 1000ms))
+            {
+                debug::lastMemoryDebugMessage = espchrono::millis_clock::now();
+                ESP_LOGI(MEMORY_TAG,
+                         "heap8bit=%zd (largest block: %zd) heap32=%zd",
+                         free_8bit_memory,
+                         heap_caps_get_largest_free_block(MALLOC_CAP_INTERNAL | MALLOC_CAP_8BIT),
+                         heap_caps_get_free_size(MALLOC_CAP_INTERNAL | MALLOC_CAP_32BIT));
+            }
         }
 
         vTaskDelay(1);

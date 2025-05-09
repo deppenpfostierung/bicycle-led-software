@@ -33,6 +33,10 @@ void handleSpecialChar(char c);
 
 } // namespace
 
+MemoryDebugMode memoryDebugMode = Off;
+
+espchrono::millis_clock::time_point lastMemoryDebugMessage {};
+
 void init()
 {
     if (const auto result = uart_set_pin(UART_NUM_0, UART_PIN_NO_CHANGE, 3, UART_PIN_NO_CHANGE, UART_PIN_NO_CHANGE);
@@ -132,6 +136,24 @@ void handleNormalChar(char c)
         case 'I':
             screen::reinit_tft();
             break;
+        case 'm':
+        case 'M':
+            // cycle through memory debug mode
+            switch (memoryDebugMode)
+            {
+            case Off:
+                memoryDebugMode = Slow;
+                ESP_LOGI(TAG, "Switching memory debug mode to Slow");
+                break;
+            case Slow:
+                memoryDebugMode = Fast;
+                ESP_LOGI(TAG, "Switching memory debug mode to Fast");
+                break;
+            case Fast:
+                memoryDebugMode = Off;
+                ESP_LOGI(TAG, "Switching memory debug mode to Off");
+                break;
+            }
 #ifdef CONFIG_RESET_VIA_CONSOLE
         case 's':
         case 'S':
