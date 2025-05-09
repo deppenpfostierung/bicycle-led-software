@@ -16,7 +16,6 @@ namespace bicycle::gui
 class StatusIcons
 {
     static constexpr auto PADDING = 10;
-    static constexpr auto HEIGHT = 50;
 
 public:
     StatusIcons(const uint16_t x, const uint16_t y)
@@ -37,6 +36,8 @@ private:
     // pos
     uint16_t m_x { 0 };
     uint16_t m_y { 0 };
+
+    uint16_t m_calculatedHeight { 0 };
 
     uint8_t m_lastVisibleIconCount { 0 };
 

@@ -10,10 +10,15 @@ namespace bicycle::gui
 
 void StatusIcons::init(espgui::TftInterface &tft)
 {
+    // first iterate over it to find the max height
+    m_calculatedHeight = std::accumulate(m_icons.begin(), m_icons.end(), 0, [](uint16_t maxHeight, const auto &icon) {
+        return std::max(maxHeight, icon->getHeight());
+    }) + 2 * PADDING;
+
     for (const auto &icon : m_icons)
     {
         icon->init(tft, false);
-        icon->moveTo(tft, m_x, m_y + HEIGHT / 2 - icon->getHeight() / 2, espgui::TFT_BLACK, true);
+        icon->moveTo(tft, m_x, m_y + m_calculatedHeight / 2 - icon->getHeight() / 2, espgui::TFT_BLACK, true);
     }
 
     drawBox(tft);
@@ -74,7 +79,7 @@ void StatusIcons::drawBox(espgui::TftInterface &tft)
             return sum + icon->getWidth() + PADDING;
         });
 
-    tft.drawRect(m_x, m_y, completeWidth + PADDING, HEIGHT, espgui::TFT_WHITE);
+    tft.drawRect(m_x, m_y, completeWidth + PADDING, m_calculatedHeight, espgui::TFT_WHITE);
 }
 
 } // namespace bicycle::gui
