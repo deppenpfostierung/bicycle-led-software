@@ -1,8 +1,6 @@
 #include "statusicons.h"
 
 // system includes
-#include "richtexthelper.h"
-
 #include <numeric>
 
 namespace bicycle::gui
@@ -11,9 +9,18 @@ namespace bicycle::gui
 void StatusIcons::init(espgui::TftInterface &tft)
 {
     // first iterate over it to find the max height
-    m_calculatedHeight = std::accumulate(m_icons.begin(), m_icons.end(), 0, [](uint16_t maxHeight, const auto &icon) {
-        return std::max(maxHeight, icon->getHeight());
-    }) + 2 * PADDING;
+    m_calculatedHeight =
+        std::accumulate(m_icons.begin(),
+                        m_icons.end(),
+                        0,
+                        [](uint16_t maxHeight, const auto &icon) { return std::max(maxHeight, icon->getHeight()); })
+        + 2 * PADDING;
+
+    m_calculatedWidth = std::accumulate(m_icons.begin(),
+                                        m_icons.end(),
+                                        0,
+                                        [](uint16_t sum, const auto &icon) { return sum + icon->getWidth() + PADDING; })
+                        + PADDING;
 
     for (const auto &icon : m_icons)
     {
@@ -74,12 +81,8 @@ void StatusIcons::redraw(espgui::TftInterface &tft)
 
 void StatusIcons::drawBox(espgui::TftInterface &tft)
 {
-    const uint16_t completeWidth =
-        std::accumulate(m_icons.begin(), m_icons.end(), 0, [](uint16_t sum, const auto &icon) {
-            return sum + icon->getWidth() + PADDING;
-        });
 
-    tft.drawRect(m_x, m_y, completeWidth + PADDING, m_calculatedHeight, espgui::TFT_WHITE);
+    tft.drawRect(m_x, m_y, m_calculatedWidth, m_calculatedHeight, espgui::TFT_WHITE);
 }
 
 } // namespace bicycle::gui

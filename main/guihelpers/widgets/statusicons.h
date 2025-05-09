@@ -38,6 +38,7 @@ private:
     uint16_t m_y { 0 };
 
     uint16_t m_calculatedHeight { 0 };
+    uint16_t m_calculatedWidth { 0 };
 
     uint8_t m_lastVisibleIconCount { 0 };
 
