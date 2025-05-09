@@ -45,7 +45,7 @@
 	url = ../../0xFEEDC0DE64/TFT_eSPI.git
 [submodule "components/esptftlib"]
 	path = components/esptftlib
-	url = ../../0xFEEDC0DE64/esptftlib.git
+	url = ../../CommanderRedYT/esptftlib.git
 [submodule "components/espfontlib"]
 	path = components/espfontlib
 	url = ../../CommanderRedYT/espfontlib.git
