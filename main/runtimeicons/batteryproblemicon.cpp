@@ -25,17 +25,30 @@ void BatteryproblemIcon::redraw(espgui::TftInterface &tft, const bool force, con
 
     // nipples should be spaced NIPPLE_WIDTH away from the outer boundaries
     tft.drawRect(m_x + NIPPLE_SPACING, m_y - NIPPLE_HEIGHT, NIPPLE_WIDTH, NIPPLE_HEIGHT, color);
-    tft.drawRect(m_x + getWidth() - NIPPLE_SPACING - NIPPLE_WIDTH, m_y - NIPPLE_HEIGHT, NIPPLE_WIDTH, NIPPLE_HEIGHT, color);
+    tft.drawRect(m_x + getWidth() - NIPPLE_SPACING - NIPPLE_WIDTH,
+                 m_y - NIPPLE_HEIGHT,
+                 NIPPLE_WIDTH,
+                 NIPPLE_HEIGHT,
+                 color);
 
     // add a plus below the right nipple
-    tft.drawLine(m_x + getWidth() - NIPPLE_SPACING, m_y + NIPPLE_HEIGHT * 2,
-                 m_x + getWidth() - NIPPLE_SPACING - NIPPLE_WIDTH, m_y + NIPPLE_HEIGHT * 2, color);
-    tft.drawLine(m_x + getWidth() - NIPPLE_SPACING - NIPPLE_WIDTH / 2, m_y + NIPPLE_HEIGHT,
-                    m_x + getWidth() - NIPPLE_SPACING - NIPPLE_WIDTH / 2, m_y + NIPPLE_WIDTH * 2, color);
+    tft.drawLine(m_x + getWidth() - NIPPLE_SPACING,
+                 m_y + NIPPLE_HEIGHT * 2,
+                 m_x + getWidth() - NIPPLE_SPACING - NIPPLE_WIDTH,
+                 m_y + NIPPLE_HEIGHT * 2,
+                 color);
+    tft.drawLine(m_x + getWidth() - NIPPLE_SPACING - NIPPLE_WIDTH / 2,
+                 m_y + NIPPLE_HEIGHT,
+                 m_x + getWidth() - NIPPLE_SPACING - NIPPLE_WIDTH / 2,
+                 m_y + NIPPLE_WIDTH * 2,
+                 color);
 
     // add a minus below the left nipple
-    tft.drawLine(m_x + NIPPLE_SPACING, m_y + NIPPLE_HEIGHT * 2,
-                 m_x + NIPPLE_SPACING + NIPPLE_WIDTH, m_y + NIPPLE_HEIGHT * 2, color);
+    tft.drawLine(m_x + NIPPLE_SPACING,
+                 m_y + NIPPLE_HEIGHT * 2,
+                 m_x + NIPPLE_SPACING + NIPPLE_WIDTH,
+                 m_y + NIPPLE_HEIGHT * 2,
+                 color);
 }
 
 uint16_t BatteryproblemIcon::getWidth()
