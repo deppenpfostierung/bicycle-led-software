@@ -6,7 +6,7 @@
 namespace bicycle::runtimeicons
 {
 
-class RearFoglightIcon : public gui::RuntimeIcon
+class BatteryproblemIcon : public gui::RuntimeIcon
 {
     using Base = RuntimeIcon;
     using Base::Base;
@@ -32,14 +32,15 @@ public:
 
     std::string name() const override
     {
-        return "RearFoglightIcon";
+        return "BatteryproblemIcon";
     }
 
 private:
     bool m_lastVisible { false };
 
-    constexpr static auto SPACING = 8;
-    constexpr static auto LINE_LENGTH = 4;
+    constexpr static auto NIPPLE_HEIGHT = 4;
+    constexpr static auto NIPPLE_WIDTH = 6;
+    constexpr static auto NIPPLE_SPACING = 3;
 };
 
 } // namespace bicycle::runtimeicons

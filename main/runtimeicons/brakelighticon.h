@@ -23,7 +23,7 @@ public:
         if (m_isVisible)
             return;
 
-        m_isVisible = espchrono::millis_clock::now().time_since_epoch() % 600ms < 300ms;
+        m_isVisible = true;
     }
 
     uint16_t getWidth() override;

@@ -1,8 +1,5 @@
 #include "rearfoglighticon.h"
 
-// 3rdparty lib includes
-#include <espchrono.h>
-
 namespace bicycle::runtimeicons
 {
 
@@ -18,24 +15,35 @@ void RearFoglightIcon::redraw(espgui::TftInterface &tft, const bool force, const
 
     m_lastVisible = m_isVisible;
 
-    const auto color = forceColor.value_or(m_isVisible ? espgui::TFT_RED : espgui::TFT_BLACK);
+    const auto color = forceColor.value_or(m_isVisible ? espgui::TFT_GOLD : espgui::TFT_BLACK);
 
     const auto radius = getHeight() / 2;
+
+    const auto segmentHeight = getHeight() / 3;
 
     tft.drawArc(m_x + radius, m_y + radius, radius, radius, 0, 180, color, espgui::TFT_BLACK);
     tft.drawLine(m_x + radius, m_y, m_x + radius, m_y + getHeight(), color);
 
-    tft.drawLine(m_x + radius + 10, m_y, m_x + radius + 10, m_y + getHeight(), color);
-    tft.drawLine(m_x + radius + 5, m_y + radius - 5, m_x + radius + 15, m_y + radius - 5, color);
-    tft.drawLine(m_x + radius + 5, m_y + radius, m_x + radius + 15, m_y + radius, color);
-    tft.drawLine(m_x + radius + 5, m_y + radius + 5, m_x + radius + 15, m_y + radius + 5, color);
+    tft.drawLine(m_x + radius + SPACING, m_y, m_x + radius + SPACING, m_y + getHeight(), color);
+
+    tft.drawLine(m_x + radius + LINE_LENGTH,
+                 m_y + radius - segmentHeight,
+                 m_x + radius + SPACING + LINE_LENGTH,
+                 m_y + radius - segmentHeight,
+                 color);
+    tft.drawLine(m_x + radius + LINE_LENGTH, m_y + radius, m_x + radius + SPACING + LINE_LENGTH, m_y + radius, color);
+    tft.drawLine(m_x + radius + LINE_LENGTH,
+                 m_y + radius + segmentHeight,
+                 m_x + radius + SPACING + LINE_LENGTH,
+                 m_y + radius + segmentHeight,
+                 color);
 }
 
 uint16_t RearFoglightIcon::getWidth()
 {
     const auto radius = getHeight() / 2;
 
-    return radius + 15;
+    return radius + SPACING + LINE_LENGTH;
 }
 
 uint16_t RearFoglightIcon::getHeight()

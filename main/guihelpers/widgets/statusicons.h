@@ -8,7 +8,10 @@
 #include <tftinterface.h>
 
 // local includes
+#include "runtimeicons/batteryproblemicon.h"
 #include "runtimeicons/brakelighticon.h"
+#include "runtimeicons/highbeamlighticon.h"
+#include "runtimeicons/lowbeamlighticon.h"
 #include "runtimeicons/rearfoglighticon.h"
 
 namespace bicycle::gui
@@ -81,10 +84,13 @@ private:
 
     uint8_t m_lastVisibleIconCount { 0 };
 
-    std::array<std::unique_ptr<RuntimeIcon>, 2> m_icons {
+    std::array<std::unique_ptr<RuntimeIcon>, 5> m_icons {
         {
          std::make_unique<runtimeicons::BrakelightIcon>(m_x, m_y),
          std::make_unique<runtimeicons::RearFoglightIcon>(m_x, m_y),
+         std::make_unique<runtimeicons::HighbeamlightIcon>(m_x, m_y),
+         std::make_unique<runtimeicons::LowbeamlightIcon>(m_x, m_y),
+         std::make_unique<runtimeicons::BatteryproblemIcon>(m_x, m_y),
          }
     };
 };

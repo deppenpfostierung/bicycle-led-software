@@ -6,7 +6,7 @@
 namespace bicycle::runtimeicons
 {
 
-class RearFoglightIcon : public gui::RuntimeIcon
+class HighbeamlightIcon : public gui::RuntimeIcon
 {
     using Base = RuntimeIcon;
     using Base::Base;
@@ -32,14 +32,14 @@ public:
 
     std::string name() const override
     {
-        return "RearFoglightIcon";
+        return "HighbeamlightIcon";
     }
 
 private:
     bool m_lastVisible { false };
 
-    constexpr static auto SPACING = 8;
-    constexpr static auto LINE_LENGTH = 4;
+    constexpr static auto SPACING = 4;
+    constexpr static auto LINE_LENGTH = 8;
 };
 
 } // namespace bicycle::runtimeicons
