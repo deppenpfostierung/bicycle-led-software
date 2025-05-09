@@ -1,6 +1,8 @@
 #include "statusicons.h"
 
 // system includes
+#include "richtexthelper.h"
+
 #include <numeric>
 
 namespace bicycle::gui
@@ -53,6 +55,15 @@ void StatusIcons::redraw(espgui::TftInterface &tft)
         }
     }
 
+    // debug
+    /*
+    for (const auto& icon : m_icons)
+    {
+        tft.fillRectHGradient(icon->getX(), m_y + 2, icon->getWidth(), 8,
+                     espgui::TFT_RED, espgui::TFT_GREEN);
+    }
+    */
+
     m_lastVisibleIconCount = visibleIconCount;
 }
 
@@ -63,7 +74,7 @@ void StatusIcons::drawBox(espgui::TftInterface &tft)
             return sum + icon->getWidth() + PADDING;
         });
 
-    tft.drawRect(m_x, m_y, completeWidth + PADDING * 2, HEIGHT, espgui::TFT_WHITE);
+    tft.drawRect(m_x, m_y, completeWidth + PADDING, HEIGHT, espgui::TFT_WHITE);
 }
 
 } // namespace bicycle::gui

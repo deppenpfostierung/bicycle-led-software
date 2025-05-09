@@ -27,7 +27,7 @@ void BrakelightIcon::redraw(espgui::TftInterface &tft, const bool force, const s
 
 uint16_t BrakelightIcon::getWidth()
 {
-    return ARC_RADIUS + CIRCLE_RADIUS + 4;
+    return ARC_RADIUS * 2 + 4;
 }
 
 uint16_t BrakelightIcon::getHeight()
