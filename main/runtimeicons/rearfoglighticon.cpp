@@ -15,7 +15,7 @@ void RearFoglightIcon::redraw(espgui::TftInterface &tft, const bool force, const
 
     m_lastVisible = m_isVisible;
 
-    const auto color = forceColor.value_or(m_isVisible ? espgui::TFT_GOLD : espgui::TFT_BLACK);
+    const auto color = forceColor.value_or(m_isVisible ? espgui::color565(255, 120, 0) : espgui::TFT_BLACK);
 
     const auto radius = getHeight() / 2;
 

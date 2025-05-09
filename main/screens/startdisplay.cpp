@@ -9,7 +9,7 @@ void StartDisplay::initScreen(espgui::TftInterface &tft)
 
     if (!m_statusIcons.constructed())
     {
-        m_statusIcons.construct(static_cast<uint16_t>(tft.width() / 2), static_cast<uint16_t>(10), true);
+        m_statusIcons.construct(static_cast<uint16_t>(tft.width() / 2), static_cast<uint16_t>(0), true);
     }
 
     if (m_statusIcons.constructed())
