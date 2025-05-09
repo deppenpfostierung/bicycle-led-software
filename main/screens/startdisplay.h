@@ -23,6 +23,8 @@ public:
 
     void update() override;
 
+    void stop() override;
+
     void buttonPressed(espgui::Button button) override
     {
         espgui::pushScreen<MainMenu>();

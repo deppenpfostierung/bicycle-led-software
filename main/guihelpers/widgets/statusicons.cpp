@@ -68,4 +68,8 @@ void StatusIcons::drawBox(espgui::TftInterface &tft)
     tft.drawRoundRect(m_x, m_y, m_calculatedWidth, m_calculatedHeight, 4, espgui::TFT_GREY);
 }
 
+void StatusIcons::stop()
+{
+}
+
 } // namespace bicycle::gui

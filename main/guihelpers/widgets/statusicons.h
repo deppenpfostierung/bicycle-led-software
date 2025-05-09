@@ -52,6 +52,8 @@ public:
 
     void update();
 
+    void stop();
+
     uint16_t getHeight() const
     {
         return m_calculatedHeight;
