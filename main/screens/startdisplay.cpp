@@ -7,21 +7,29 @@ void StartDisplay::initScreen(espgui::TftInterface &tft)
 {
     Base::initScreen(tft);
 
-    m_statusIcons.init(tft);
+    if (!m_statusIcons.constructed())
+    {
+        m_statusIcons.construct(static_cast<uint16_t>(tft.width() / 2), static_cast<uint16_t>(10), true);
+    }
+
+    if (m_statusIcons.constructed())
+        m_statusIcons->init(tft);
 }
 
 void StartDisplay::update()
 {
     Base::update();
 
-    m_statusIcons.update();
+    if (m_statusIcons.constructed())
+        m_statusIcons->update();
 }
 
 void StartDisplay::redraw(espgui::TftInterface &tft)
 {
     Base::redraw(tft);
 
-    m_statusIcons.redraw(tft);
+    if (m_statusIcons.constructed())
+        m_statusIcons->redraw(tft);
 }
 
 } // namespace bicycle::gui

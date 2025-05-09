@@ -1,27 +1,10 @@
 #include "statusicons.h"
 
-// system includes
-#include <numeric>
-
 namespace bicycle::gui
 {
 
 void StatusIcons::init(espgui::TftInterface &tft)
 {
-    // first iterate over it to find the max height
-    m_calculatedHeight =
-        std::accumulate(m_icons.begin(),
-                        m_icons.end(),
-                        0,
-                        [](uint16_t maxHeight, const auto &icon) { return std::max(maxHeight, icon->getHeight()); })
-        + 2 * PADDING;
-
-    m_calculatedWidth = std::accumulate(m_icons.begin(),
-                                        m_icons.end(),
-                                        0,
-                                        [](uint16_t sum, const auto &icon) { return sum + icon->getWidth() + PADDING; })
-                        + PADDING;
-
     for (const auto &icon : m_icons)
     {
         icon->init(tft, false);

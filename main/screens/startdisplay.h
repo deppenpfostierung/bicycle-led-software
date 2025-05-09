@@ -1,6 +1,7 @@
 #pragma once
 
 // 3rdparty lib includes
+#include <delayedconstruction.h>
 #include <screenmanager.h>
 
 // local includes
@@ -28,7 +29,7 @@ public:
     }
 
 private:
-    StatusIcons m_statusIcons { 10, 10 };
+    cpputils::DelayedConstruction<StatusIcons> m_statusIcons;
 };
 
 } // namespace bicycle::gui

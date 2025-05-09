@@ -2,6 +2,7 @@
 
 // system includes
 #include <array>
+#include <numeric>
 
 // 3rdparty lib includes
 #include <tftinterface.h>
@@ -18,10 +19,28 @@ class StatusIcons
     static constexpr auto PADDING = 10;
 
 public:
-    StatusIcons(const uint16_t x, const uint16_t y)
+    StatusIcons(const uint16_t x, const uint16_t y, const bool autoCenter = false)
         : m_x { x }
         , m_y { y }
     {
+        m_calculatedHeight =
+            std::accumulate(m_icons.begin(),
+                            m_icons.end(),
+                            0,
+                            [](uint16_t maxHeight, const auto &icon) { return std::max(maxHeight, icon->getHeight()); })
+            + 2 * PADDING;
+
+        m_calculatedWidth =
+            std::accumulate(m_icons.begin(),
+                            m_icons.end(),
+                            0,
+                            [](uint16_t sum, const auto &icon) { return sum + icon->getWidth() + PADDING; })
+            + PADDING;
+
+        if (autoCenter)
+        {
+            m_x -= m_calculatedWidth / 2;
+        }
     }
 
     void init(espgui::TftInterface &tft);
@@ -29,6 +48,26 @@ public:
     void redraw(espgui::TftInterface &tft);
 
     void update();
+
+    uint16_t getHeight() const
+    {
+        return m_calculatedHeight;
+    }
+
+    uint16_t getWidth() const
+    {
+        return m_calculatedWidth;
+    }
+
+    uint16_t getX() const
+    {
+        return m_x;
+    }
+
+    uint16_t getY() const
+    {
+        return m_y;
+    }
 
 private:
     void drawBox(espgui::TftInterface &tft);
