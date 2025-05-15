@@ -7,6 +7,8 @@
 // local includes
 #include "guihelpers/display.h"
 #include "guihelpers/widgets/statusicons.h"
+#include "runtimeicons/leftarrowicon.h"
+#include "runtimeicons/rightarrowicon.h"
 #include "screens/menus/mainmenu.h"
 
 namespace bicycle::gui
@@ -31,7 +33,11 @@ public:
     }
 
 private:
+    static constexpr auto ICON_SPACING = 35;
+
     cpputils::DelayedConstruction<StatusIcons> m_statusIcons;
+    cpputils::DelayedConstruction<runtimeicons::LeftArrowIcon> m_leftArrowIcon;
+    cpputils::DelayedConstruction<runtimeicons::RightArrowIcon> m_rightArrowIcon;
 };
 
 } // namespace bicycle::gui

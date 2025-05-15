@@ -257,11 +257,13 @@ public:
         {
             return true;
         }
+
         value_t defaultValue() const final
         {
             return INPUT_BUTTON_NONE;
         }
-        ConfigConstraintReturnType checkValue(value_t value) const final
+
+        ConfigConstraintReturnType checkValue(const value_t value) const final
         {
             if (value == INPUT_BUTTON_NONE)
             {

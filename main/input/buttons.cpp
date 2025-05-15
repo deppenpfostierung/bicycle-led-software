@@ -6,13 +6,14 @@
 // local includes
 #include "configs.h"
 #include "screen.h"
+#include "statemachine.h"
 
 namespace bicycle
 {
 
 namespace
 {
-constexpr const char TAG[] = "BUTTONS";
+constexpr const char *const TAG = "BUTTONS";
 } // namespace
 
 std::optional<espchrono::millis_clock::time_point> buttonLeftHeld;
@@ -89,6 +90,77 @@ void handleCustomAction(const ButtonAction action)
     }
 
     ESP_LOGI(TAG, "Handling action %s", toString(action).c_str());
+
+    switch (action)
+    {
+    case ButtonAction::Unused:
+        __builtin_unreachable();
+        break;
+    case ButtonAction::LeftBlinker: {
+        const auto &currentState = stateMachine.getCurrentState();
+
+        switch (currentState.lights.blinkerState)
+        {
+        case State::Lights::LEFT:
+            stateMachine.handleAction(BLINKER_OFF);
+            break;
+        case State::Lights::RIGHT:
+            stateMachine.handleAction(BLINKER_HAZARD);
+            break;
+        case State::Lights::HAZARD:
+            stateMachine.handleAction(BLINKER_OFF);
+            break;
+        case State::Lights::OFF:
+            stateMachine.handleAction(BLINKER_LEFT);
+            break;
+        default:
+            ESP_LOGW(TAG, "Unknown blinker state %d", currentState.lights.blinkerState);
+            break;
+        }
+        break;
+    }
+    case ButtonAction::RightBlinker: {
+        const auto &currentState = stateMachine.getCurrentState();
+
+        switch (currentState.lights.blinkerState)
+        {
+        case State::Lights::RIGHT:
+            stateMachine.handleAction(BLINKER_OFF);
+            break;
+        case State::Lights::LEFT:
+            stateMachine.handleAction(BLINKER_HAZARD);
+            break;
+        case State::Lights::HAZARD:
+            stateMachine.handleAction(BLINKER_OFF);
+            break;
+        case State::Lights::OFF:
+            stateMachine.handleAction(BLINKER_RIGHT);
+            break;
+        default:
+            ESP_LOGW(TAG, "Unknown blinker state %d", currentState.lights.blinkerState);
+            break;
+        }
+        break;
+    }
+    case ButtonAction::ToggleHazards: {
+        const auto &currentState = stateMachine.getCurrentState();
+
+        stateMachine.handleAction(currentState.lights.blinkerState == State::Lights::HAZARD ? BLINKER_OFF
+                                                                                            : BLINKER_HAZARD);
+        break;
+    }
+    case ButtonAction::ToggleHighBeam: {
+        stateMachine.handleAction(HIGH_BEAM_TOGGLE);
+        break;
+    }
+    case ButtonAction::ToggleLowBeam: {
+        stateMachine.handleAction(LOW_BEAM_TOGGLE);
+        break;
+    }
+    case ButtonAction::RearFogLight: {
+        stateMachine.handleAction(REAR_FOG_LIGHT_TOGGLE);
+    }
+    }
 }
 
 void buttonPressedCommon(const espgui::Button button)

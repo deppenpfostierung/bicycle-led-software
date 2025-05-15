@@ -10,6 +10,7 @@
 #include "input/dpad.h"
 #include "screen.h"
 #include "serialdebug.h"
+#include "statemachine.h"
 #include "wifi.h"
 
 using namespace std::chrono_literals;
@@ -34,6 +35,7 @@ SchedulerTask schedulerTaskArr[] {
     SchedulerTask { "debugconsole",   debug::init,                 debug::update,                 50ms  },
     SchedulerTask { "display_update", noop,                        screen::update,                16ms  },
     SchedulerTask { "wifi",           wifi::begin,                 wifi::update,                  100ms },
+    SchedulerTask { "statemachine",   init_statemachine,           update_statemachine,           50ms  },
 };
 } // namespace
 
