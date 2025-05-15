@@ -15,6 +15,19 @@ void StateMachine::start()
 
 void StateMachine::update()
 {
+    if (m_currentState.lights.blinkerState != State::Lights::OFF)
+    {
+        if (m_currentState.lights.lastBlinkerChange == std::nullopt ||
+            espchrono::ago(*m_currentState.lights.lastBlinkerChange) > timings.BLINKER_INTERVAL)
+        {
+            m_currentState.lights.blinkVisible = !m_currentState.lights.blinkVisible;
+            m_currentState.lights.lastBlinkerChange = espchrono::millis_clock::now();
+        }
+    }
+    else
+    {
+        m_currentState.lights.blinkVisible = false;
+    }
 }
 
 void StateMachine::stop()

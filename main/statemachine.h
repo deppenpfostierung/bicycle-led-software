@@ -1,6 +1,7 @@
 #pragma once
 
-// system includes
+// 3rdparty lib includes
+#include <espchrono.h>
 #include <cppmacros.h>
 
 namespace bicycle
@@ -47,6 +48,9 @@ struct State
             HAZARD
         } blinkerState = OFF;
 
+        std::optional<espchrono::millis_clock::time_point> lastBlinkerChange;
+        bool blinkVisible { false };
+
         bool highBeam { false };
         bool lowBeam { false };
 
@@ -85,6 +89,11 @@ public:
     {
         return m_currentState;
     }
+
+    struct Timings
+    {
+        static constexpr auto BLINKER_INTERVAL = espchrono::milliseconds32{500};
+    } timings;
 
 private:
     State m_currentState;

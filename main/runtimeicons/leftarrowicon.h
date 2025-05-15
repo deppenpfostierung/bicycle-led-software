@@ -25,8 +25,15 @@ public:
         if (m_isVisible)
             return;
 
-        m_isVisible = stateMachine.getCurrentState().lights.blinkerState == State::Lights::LEFT ||
-                      stateMachine.getCurrentState().lights.blinkerState == State::Lights::HAZARD;
+        const auto& state = stateMachine.getCurrentState();
+
+        m_isVisible = state.lights.blinkerState == State::Lights::LEFT ||
+                      state.lights.blinkerState == State::Lights::HAZARD;
+
+        if (!state.lights.blinkVisible)
+        {
+            m_isVisible = false;
+        }
     }
 
     uint16_t getWidth() override;
