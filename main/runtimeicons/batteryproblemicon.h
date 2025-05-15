@@ -2,6 +2,7 @@
 
 // local includes
 #include "guihelpers/runtimeicon.h"
+#include "statemachine.h"
 
 namespace bicycle::runtimeicons
 {
@@ -23,7 +24,13 @@ public:
         if (m_isVisible)
             return;
 
-        m_isVisible = true;
+        const auto& state = stateMachine.getCurrentState();
+
+        m_isVisible = state.battery.batteryState != State::Battery::BATTERY_OK;
+
+        m_color = state.battery.batteryState == State::Battery::BATTERY_LOW
+                      ? espgui::TFT_GOLD
+                      : espgui::TFT_RED;
     }
 
     uint16_t getWidth() override;
@@ -37,6 +44,9 @@ public:
 
 private:
     bool m_lastVisible { false };
+
+    uint16_t m_color { espgui::TFT_RED };
+    uint16_t m_lastColor { 0 };
 
     constexpr static auto NIPPLE_HEIGHT = 4;
     constexpr static auto NIPPLE_WIDTH = 6;

@@ -11,13 +11,14 @@ void BatteryproblemIcon::redraw(espgui::TftInterface &tft, const bool force, con
     if (!m_shouldRender)
         return;
 
-    if (m_lastVisible == m_isVisible && !force)
+    if (m_lastVisible == m_isVisible && m_lastColor == m_color && !force)
     {
         return;
     }
 
-    const auto color = forceColor.value_or(m_isVisible ? espgui::TFT_RED : espgui::TFT_BLACK);
+    const auto color = forceColor.value_or(m_isVisible ? m_color : espgui::TFT_BLACK);
 
+    m_lastColor = m_color;
     m_lastVisible = m_isVisible;
 
     // draw battery icon

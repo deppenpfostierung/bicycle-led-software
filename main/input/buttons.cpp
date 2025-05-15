@@ -97,56 +97,15 @@ void handleCustomAction(const ButtonAction action)
         __builtin_unreachable();
         break;
     case ButtonAction::LeftBlinker: {
-        const auto &currentState = stateMachine.getCurrentState();
-
-        switch (currentState.lights.blinkerState)
-        {
-        case State::Lights::LEFT:
-            stateMachine.handleAction(BLINKER_OFF);
-            break;
-        case State::Lights::RIGHT:
-            stateMachine.handleAction(BLINKER_HAZARD);
-            break;
-        case State::Lights::HAZARD:
-            stateMachine.handleAction(BLINKER_OFF);
-            break;
-        case State::Lights::OFF:
-            stateMachine.handleAction(BLINKER_LEFT);
-            break;
-        default:
-            ESP_LOGW(TAG, "Unknown blinker state %d", currentState.lights.blinkerState);
-            break;
-        }
+        stateMachine.handleAction(BLINKER_TOGGLE_LEFT);
         break;
     }
     case ButtonAction::RightBlinker: {
-        const auto &currentState = stateMachine.getCurrentState();
-
-        switch (currentState.lights.blinkerState)
-        {
-        case State::Lights::RIGHT:
-            stateMachine.handleAction(BLINKER_OFF);
-            break;
-        case State::Lights::LEFT:
-            stateMachine.handleAction(BLINKER_HAZARD);
-            break;
-        case State::Lights::HAZARD:
-            stateMachine.handleAction(BLINKER_OFF);
-            break;
-        case State::Lights::OFF:
-            stateMachine.handleAction(BLINKER_RIGHT);
-            break;
-        default:
-            ESP_LOGW(TAG, "Unknown blinker state %d", currentState.lights.blinkerState);
-            break;
-        }
+        stateMachine.handleAction(BLINKER_TOGGLE_RIGHT);
         break;
     }
     case ButtonAction::ToggleHazards: {
-        const auto &currentState = stateMachine.getCurrentState();
-
-        stateMachine.handleAction(currentState.lights.blinkerState == State::Lights::HAZARD ? BLINKER_OFF
-                                                                                            : BLINKER_HAZARD);
+        stateMachine.handleAction(BLINKER_TOGGLE_HAZARD);
         break;
     }
     case ButtonAction::ToggleHighBeam: {

@@ -16,6 +16,7 @@
 // local includes
 #include "configs.h"
 #include "screen.h"
+#include "statemachine.h"
 
 namespace bicycle::debug
 {
@@ -163,6 +164,16 @@ void handleNormalChar(char c)
                 ESP_LOGE(TAG, "Error when resetting configs: %s", res.error().c_str());
             break;
 #endif
+        case 'z':
+        case 'Z':
+            // left blinker
+            stateMachine.handleAction(BLINKER_TOGGLE_LEFT);
+            break;
+        case 'u':
+        case 'U':
+            // right blinker
+            stateMachine.handleAction(BLINKER_TOGGLE_RIGHT);
+            break;
         }
     }
 }

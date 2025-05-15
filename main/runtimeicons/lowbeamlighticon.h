@@ -2,6 +2,7 @@
 
 // local includes
 #include "guihelpers/runtimeicon.h"
+#include "statemachine.h"
 
 namespace bicycle::runtimeicons
 {
@@ -23,7 +24,7 @@ public:
         if (m_isVisible)
             return;
 
-        m_isVisible = true;
+        m_isVisible = stateMachine.getCurrentState().lights.lowBeam;
     }
 
     uint16_t getWidth() override;

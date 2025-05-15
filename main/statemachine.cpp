@@ -28,14 +28,46 @@ void StateMachine::handleAction(const Action action)
     case BLINKER_OFF:
         m_currentState.lights.blinkerState = State::Lights::OFF;
         return;
-    case BLINKER_LEFT:
-        m_currentState.lights.blinkerState = State::Lights::LEFT;
+    case BLINKER_TOGGLE_LEFT: {
+        switch (m_currentState.lights.blinkerState)
+        {
+        case State::Lights::LEFT:
+        case State::Lights::HAZARD:
+            m_currentState.lights.blinkerState = State::Lights::OFF;
+            break;
+        case State::Lights::RIGHT:
+            m_currentState.lights.blinkerState = State::Lights::HAZARD;
+            break;
+        case State::Lights::OFF:
+            m_currentState.lights.blinkerState = State::Lights::LEFT;
+            break;
+        default:
+            ESP_LOGW(TAG, "Unknown blinker state %d", m_currentState.lights.blinkerState);
+            break;
+        }
         return;
-    case BLINKER_RIGHT:
-        m_currentState.lights.blinkerState = State::Lights::RIGHT;
+    }
+    case BLINKER_TOGGLE_RIGHT: {
+        switch (m_currentState.lights.blinkerState)
+        {
+        case State::Lights::RIGHT:
+        case State::Lights::HAZARD:
+            m_currentState.lights.blinkerState = State::Lights::OFF;
+            break;
+        case State::Lights::LEFT:
+            m_currentState.lights.blinkerState = State::Lights::HAZARD;
+            break;
+        case State::Lights::OFF:
+            m_currentState.lights.blinkerState = State::Lights::RIGHT;
+            break;
+        default:
+            ESP_LOGW(TAG, "Unknown blinker state %d", m_currentState.lights.blinkerState);
+            break;
+        }
         return;
-    case BLINKER_HAZARD:
-        m_currentState.lights.blinkerState = State::Lights::HAZARD;
+    }
+    case BLINKER_TOGGLE_HAZARD:
+        m_currentState.lights.blinkerState = m_currentState.lights.blinkerState == State::Lights::HAZARD ? State::Lights::OFF : State::Lights::HAZARD;
         return;
     case HIGH_BEAM_TOGGLE:
         m_currentState.lights.highBeam = !m_currentState.lights.highBeam;
