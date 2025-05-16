@@ -15,6 +15,9 @@ if [[ ! -d "./main" ]]; then
     exit 1
 fi
 
+# print clang-format version
+clang-format --version
+
 echo "Running clang-format on all .h and .cpp files in the ./main directory, excluding the ./main/icons directory."
 
 # run clang-format. use the '.clang-format' file in the current directory.
