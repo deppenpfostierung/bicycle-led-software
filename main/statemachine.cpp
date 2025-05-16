@@ -17,8 +17,8 @@ void StateMachine::update()
 {
     if (m_currentState.lights.blinkerState != State::Lights::OFF)
     {
-        if (m_currentState.lights.lastBlinkerChange == std::nullopt ||
-            espchrono::ago(*m_currentState.lights.lastBlinkerChange) > timings.BLINKER_INTERVAL)
+        if (m_currentState.lights.lastBlinkerChange == std::nullopt
+            || espchrono::ago(*m_currentState.lights.lastBlinkerChange) > timings.BLINKER_INTERVAL)
         {
             m_currentState.lights.blinkVisible = !m_currentState.lights.blinkVisible;
             m_currentState.lights.lastBlinkerChange = espchrono::millis_clock::now();
@@ -80,7 +80,8 @@ void StateMachine::handleAction(const Action action)
         return;
     }
     case BLINKER_TOGGLE_HAZARD:
-        m_currentState.lights.blinkerState = m_currentState.lights.blinkerState == State::Lights::HAZARD ? State::Lights::OFF : State::Lights::HAZARD;
+        m_currentState.lights.blinkerState =
+            m_currentState.lights.blinkerState == State::Lights::HAZARD ? State::Lights::OFF : State::Lights::HAZARD;
         return;
     case HIGH_BEAM_TOGGLE:
         m_currentState.lights.highBeam = !m_currentState.lights.highBeam;

@@ -265,17 +265,6 @@ public:
 
         ConfigConstraintReturnType checkValue(const value_t value) const final
         {
-            if (value == INPUT_BUTTON_NONE)
-            {
-                return {};
-            }
-
-            if (value < std::to_underlying(bicycle::BicycleButton::Custom1)
-                || value > std::to_underlying(bicycle::BicycleButton::Custom12))
-            {
-                return std::unexpected("Invalid button ID");
-            }
-
             return {};
         }
     } buttonId;

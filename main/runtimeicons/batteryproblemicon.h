@@ -24,13 +24,11 @@ public:
         if (m_isVisible)
             return;
 
-        const auto& state = stateMachine.getCurrentState();
+        const auto &state = stateMachine.getCurrentState();
 
         m_isVisible = state.battery.batteryState != State::Battery::BATTERY_OK;
 
-        m_color = state.battery.batteryState == State::Battery::BATTERY_LOW
-                      ? espgui::TFT_GOLD
-                      : espgui::TFT_RED;
+        m_color = state.battery.batteryState == State::Battery::BATTERY_LOW ? espgui::TFT_GOLD : espgui::TFT_RED;
     }
 
     uint16_t getWidth() override;

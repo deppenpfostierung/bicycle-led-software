@@ -96,27 +96,27 @@ void handleCustomAction(const ButtonAction action)
     case ButtonAction::Unused:
         __builtin_unreachable();
         break;
-    case ButtonAction::LeftBlinker: {
+    case ButtonAction::Left_Blinker: {
         stateMachine.handleAction(BLINKER_TOGGLE_LEFT);
         break;
     }
-    case ButtonAction::RightBlinker: {
+    case ButtonAction::Right_Blinker: {
         stateMachine.handleAction(BLINKER_TOGGLE_RIGHT);
         break;
     }
-    case ButtonAction::ToggleHazards: {
+    case ButtonAction::Toggle_Hazards: {
         stateMachine.handleAction(BLINKER_TOGGLE_HAZARD);
         break;
     }
-    case ButtonAction::ToggleHighBeam: {
+    case ButtonAction::Toggle_Highbeam: {
         stateMachine.handleAction(HIGH_BEAM_TOGGLE);
         break;
     }
-    case ButtonAction::ToggleLowBeam: {
+    case ButtonAction::Toggle_Lowbeam: {
         stateMachine.handleAction(LOW_BEAM_TOGGLE);
         break;
     }
-    case ButtonAction::RearFogLight: {
+    case ButtonAction::Rear_Fog_Light: {
         stateMachine.handleAction(REAR_FOG_LIGHT_TOGGLE);
     }
     }
@@ -184,8 +184,7 @@ void buttonPressedCommon(const espgui::Button button)
     case Custom12:
         cfg_ptr = &configs.dpad.mappingCustom12;
         break;
-    default:
-        return;
+    default:;
     }
 
     if (!cfg_ptr)

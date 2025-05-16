@@ -1,8 +1,8 @@
 file(
     GLOB_RECURSE files
-        *.h
-        *.cpp
-        *.c
+        ${COMPONENT_DIR}/*.h
+        ${COMPONENT_DIR}/*.cpp
+        ${COMPONENT_DIR}/*.c
 )
 
 set(dependencies
@@ -58,7 +58,7 @@ idf_component_register(
     SRCS
         ${files}
     INCLUDE_DIRS
-        .
+        ${COMPONENT_DIR}
         ${CMAKE_CURRENT_BINARY_DIR}/generated
     REQUIRES
         ${dependencies}

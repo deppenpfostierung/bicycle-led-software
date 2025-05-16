@@ -10,7 +10,7 @@
 namespace bicycle::gui
 {
 template <typename Tvalue>
-class BicycleChangeValueDisplay : public espgui::ChangeValueDisplay<Tvalue>, public virtual ErrorHandler
+class BicycleChangeValueDisplay : public espgui::ChangeValueDisplay<Tvalue>, public virtual BicycleErrorHandler
 {
     using Base = espgui::ChangeValueDisplay<Tvalue>;
 

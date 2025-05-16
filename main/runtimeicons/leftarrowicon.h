@@ -25,10 +25,10 @@ public:
         if (m_isVisible)
             return;
 
-        const auto& state = stateMachine.getCurrentState();
+        const auto &state = stateMachine.getCurrentState();
 
-        m_isVisible = state.lights.blinkerState == State::Lights::LEFT ||
-                      state.lights.blinkerState == State::Lights::HAZARD;
+        m_isVisible =
+            state.lights.blinkerState == State::Lights::LEFT || state.lights.blinkerState == State::Lights::HAZARD;
 
         if (!state.lights.blinkVisible)
         {

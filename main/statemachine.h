@@ -1,8 +1,8 @@
 #pragma once
 
 // 3rdparty lib includes
-#include <espchrono.h>
 #include <cppmacros.h>
+#include <espchrono.h>
 
 namespace bicycle
 {
@@ -92,7 +92,7 @@ public:
 
     struct Timings
     {
-        static constexpr auto BLINKER_INTERVAL = espchrono::milliseconds32{500};
+        static constexpr auto BLINKER_INTERVAL = espchrono::milliseconds32 { 500 };
     } timings;
 
 private:

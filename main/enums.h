@@ -7,5 +7,5 @@
 #include <cpptypesafeenum.h>
 
 #define ButtonActionValues(x)                                                                                          \
-    x(Unused) x(LeftBlinker) x(RightBlinker) x(ToggleHazards) x(ToggleHighBeam) x(ToggleLowBeam) x(RearFogLight)
+    x(Unused) x(Left_Blinker) x(Right_Blinker) x(Toggle_Hazards) x(Toggle_Highbeam) x(Toggle_Lowbeam) x(Rear_Fog_Light)
 DECLARE_TYPESAFE_ENUM(ButtonAction, : uint8_t, ButtonActionValues)
