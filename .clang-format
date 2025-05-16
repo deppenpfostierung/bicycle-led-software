@@ -12,4 +12,6 @@ BreakBeforeBinaryOperators: NonAssignment
 AllowAllArgumentsOnNextLine: false
 BinPackArguments: false
 BreakConstructorInitializers: BeforeComma
+
+InsertNewlineAtEOF: true
 ...
