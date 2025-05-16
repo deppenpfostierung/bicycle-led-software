@@ -5,8 +5,8 @@
 
 template <typename T> void forEveryButton(T &&callback)
 {
-#define REGISTER_BUTTON(x)                                                                                             \
-    if (callback(x))                                                                                                   \
+#define REGISTER_BUTTON(x) \
+    if (callback(x))       \
         return;
 
     REGISTER_BUTTON(&configs.dpad.mappingUp)
@@ -19,8 +19,8 @@ template <typename T> void forEveryButton(T &&callback)
 
 template <typename T> void forEveryCustomButton(T &&callback)
 {
-#define REGISTER_CUSTOM_BUTTON(x)                                                                                      \
-    if (callback(x))                                                                                                   \
+#define REGISTER_CUSTOM_BUTTON(x) \
+    if (callback(x))              \
         return;
 
     REGISTER_CUSTOM_BUTTON(&configs.dpad.mappingCustom1);

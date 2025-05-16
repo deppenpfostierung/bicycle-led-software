@@ -245,8 +245,8 @@ public:
     // clang-format on
     template <typename T> void callForEveryConfig(T &&callable)
     {
-#define REGISTER_CONFIG(name)                                                                                          \
-    if (callable(name))                                                                                                \
+#define REGISTER_CONFIG(name) \
+    if (callable(name))       \
         return;
 
         // DISPLAY
