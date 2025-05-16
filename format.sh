@@ -2,6 +2,7 @@
 
 # run clang-format on all .h and .cpp files in the ./main directory.
 # exclude the ./main/icons directory.
+MINIMUM_CLANG_FORMAT_VERSION=19
 
 # check if clang-format is installed
 if ! command -v clang-format &> /dev/null; then
@@ -22,14 +23,14 @@ clang_format_command="clang-format"
 # check if clang-format version is 19 or higher
 if [[ $clang_format_version =~ [0-9]+ ]]; then
     clang_format_version_number=${BASH_REMATCH[0]}
-    if (( clang_format_version_number < 19 )); then
-        # check if clang-format-19 is installed
-        if ! command -v clang-format-19 &> /dev/null; then
-            echo "clang-format version $clang_format_version_number is less than 19 and clang-format-19 is not installed."
+    if (( clang_format_version_number < MINIMUM_CLANG_FORMAT_VERSION )); then
+        # check if clang-format-$MINIMUM_CLANG_FORMAT_VERSION
+        if ! command -v clang-format-$MINIMUM_CLANG_FORMAT_VERSION &> /dev/null; then
+            echo "Default $(which clang-format) version $clang_format_version_number is less than $MINIMUM_CLANG_FORMAT_VERSION and clang-format-$MINIMUM_CLANG_FORMAT_VERSION is not installed."
             exit 1
         else
-            echo "clang-format version $clang_format_version_number is less than 19, using clang-format-19."
-            clang_format_command="clang-format-19"
+            echo "Default $(which clang-format) version $clang_format_version_number is less than $MINIMUM_CLANG_FORMAT_VERSION, using clang-format-$MINIMUM_CLANG_FORMAT_VERSION instead."
+            clang_format_command="clang-format-$MINIMUM_CLANG_FORMAT_VERSION"
         fi
     fi
 fi
