@@ -29,7 +29,18 @@ public:
 
     void buttonPressed(espgui::Button button) override
     {
-        espgui::pushScreen<MainMenu>();
+        switch (button)
+        {
+        case espgui::Up:
+        case espgui::Down:
+        case espgui::Left:
+        case espgui::Right:
+            espgui::pushScreen<MainMenu>();
+            break;
+        default:;
+        }
+
+        Base::buttonPressed(button);
     }
 
 private:
